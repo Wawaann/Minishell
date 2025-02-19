@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/19 15:48:25 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:56:22 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,34 @@
 
 # include "../lib/include/libft.h"
 
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
 
 typedef struct s_shell
 {
-	char	*input;       // Ligne de commande brute (récupérée avec readline)
-	char	**tokens;     // Commande découpée en tokens
-	char	***cmds;      // Tableau des commandes séparées par `|`
-	int		num_cmds;     // Nombre de commandes
-	char	**env;        // Environnement
-	int		exit_status;  // Dernier code de retour
+	char	*input;			// Ligne de commande brute (récupérée avec readline)
+	char	**tokens;		// Commande découpée en tokens
+	char	***cmds;		// Tableau des commandes séparées par `|`
+	int		num_cmds;		// Nombre de commandes
+	char	**env;			// Environnement
+	char	**path;			// Chemin(s) vers la/les commande(s) (si plusieurs pipes, plusieurs chemins)
+	int		exit_status;	// Dernier code de retour
 	int		*operator;		//[< , << , > , >>]
 	char	*infile;		// nom fu fichier
 	char	*outfile;		// nom du fichier
 }			t_shell;
+
+
+// Exec
+void	ft_error(char *str);
+void	execute_simple_cmd(t_shell *shell);
+void	execute_command(t_shell *shell);
+
+// Exec Utils
+void	free_double_tab(char **tab);
+char	**get_all_path(t_shell *shell);
+char	*get_path(t_shell *shell, char *cmd_name);
+void	init_path(t_shell *shell);
 
 #endif
