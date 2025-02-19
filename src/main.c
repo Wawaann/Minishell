@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/19 15:39:54 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:41:34 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int	main(int ac, char **av, char **env)
 		printf("input: %s\n", shell.input);
 		free(shell.input);
 	}
-	clear_history();
+	rl_clear_history();
 	return (0);
 }
