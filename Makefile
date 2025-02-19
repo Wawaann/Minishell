@@ -7,7 +7,7 @@ OBJ		=	$(patsubst src/%.c,$(OBJ_DIR)%.o,$(SRC))
 
 INCLUDE	=	-I./include/
 
-LIB		=	-L./lib -lft
+LIB		=	-L./lib -lft -lreadline
 
 FLAG	=	-Wall -Wextra -Werror -g3
 

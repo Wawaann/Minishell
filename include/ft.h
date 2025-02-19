@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/08 15:04:02 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:06:18 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 # define FT_H
 
 # include "../lib/include/libft.h"
+
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #endif
