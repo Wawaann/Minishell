@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/19 18:05:57 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:19:27 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	creation_cmds_dur(t_shell *shell)
 {
 	// Allocation du tableau de commandes (2 commandes max)
-	shell->cmds = malloc(sizeof(char **) * 2);
+	shell->cmds = malloc(sizeof(char **) * 3);
 
 	// Première commande (ex: ["ls", "-l", NULL])
 	shell->cmds[0] = malloc(sizeof(char *) * 3);
@@ -23,8 +23,13 @@ void	creation_cmds_dur(t_shell *shell)
 	shell->cmds[0][1] = ft_strdup("-l");
 	shell->cmds[0][2] = NULL;
 
+	shell->cmds[1] = malloc(sizeof(char *) * 3);
+	shell->cmds[1][0] = ft_strdup("wc");
+	shell->cmds[1][1] = ft_strdup("-w");
+	shell->cmds[1][2] = NULL;
+
 	// Fin du tableau de commandes
-	shell->cmds[1] = NULL;
+	shell->cmds[2] = NULL;
 }
 
 void	free_cmds(t_shell *shell)
@@ -33,6 +38,11 @@ void	free_cmds(t_shell *shell)
 	free(shell->cmds[0][0]);
 	free(shell->cmds[0][1]);
 	free(shell->cmds[0]);
+
+	free(shell->cmds[1][0]);
+	free(shell->cmds[1][1]);
+	free(shell->cmds[1]);
+
 	free(shell->cmds);
 }
 
@@ -55,7 +65,7 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	init_shell(&shell, env);
 	creation_cmds_dur(&shell);
-	shell.num_cmds = 1;
+	shell.num_cmds = 2;
 	init_path(&shell);
 	while (1)
 	{
@@ -64,7 +74,10 @@ int	main(int ac, char **av, char **env)
 			break;
 		add_history(shell.input);
 		//printf("input: %s\n", shell.input);
+		init_pipes(&shell);
 		execute_command(&shell);
+		ft_close_pipes(&shell);
+		ft_wait_childs(&shell);
 		free(shell.input);
 	}
 	rl_clear_history();

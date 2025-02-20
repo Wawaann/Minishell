@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/19 18:06:56 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:06:10 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ void	free_double_tab(char **tab)
 	free(tab);
 }
 
+/*
+	- Browse environment variables until you find 'PATH'
+	- Return double tab with all path possibles separate by ':'
+		/home/cedmarti/bin
+		/usr/local/sbin
+		/usr/local/bin
+		/usr/sbin
+		/usr/bin
+		/sbin
+		/bin
+		/usr/games
+		/usr/local/games
+		/snap/bin
+*/
+
 char	**get_all_path(t_shell *shell)
 {
 	char	**path;
@@ -42,6 +57,13 @@ char	**get_all_path(t_shell *shell)
 	}
 	return (NULL);
 }
+
+/*
+	- Try all path to find the right one
+		- add "/" + "command name" to the path
+		- check with access() if the command exist and if we have the right to execute it
+	- Return the right pass if there is one
+*/
 
 char	*get_path(t_shell *shell, char *cmd_name)
 {
@@ -69,6 +91,13 @@ char	*get_path(t_shell *shell, char *cmd_name)
 	return (NULL);
 }
 
+/*
+	multiple commands = multiple paths
+	- allocate memory for a double tab of paths
+	- save each good path into the double tab
+	(path[0] = path for command[0] ...)
+*/
+
 void	init_path(t_shell *shell)
 {
 	int	i;
@@ -77,7 +106,7 @@ void	init_path(t_shell *shell)
 	shell->path = malloc(sizeof(char *) * (shell->num_cmds + 1));
 	if (!shell->path)
 	{
-		// free ce qui a ete allouer
+		// Do not forget to free memory before exit
 		ft_error("Error allocating memory for paths\n");
 	}
 	while (i < shell->num_cmds)

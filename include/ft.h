@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/19 17:56:22 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:01:24 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_shell
 	int		num_cmds;		// Nombre de commandes
 	char	**env;			// Environnement
 	char	**path;			// Chemin(s) vers la/les commande(s) (si plusieurs pipes, plusieurs chemins)
+	int		**pipes;		// double tab de pipes ({0 , 1} {2 , 3} ...) index 0 (0, 2)= lecture et index 1 (1, 3)= ecriture
 	int		exit_status;	// Dernier code de retour
 	int		*operator;		//[< , << , > , >>]
 	char	*infile;		// nom fu fichier
@@ -44,5 +45,8 @@ void	free_double_tab(char **tab);
 char	**get_all_path(t_shell *shell);
 char	*get_path(t_shell *shell, char *cmd_name);
 void	init_path(t_shell *shell);
+void	init_pipes(t_shell *shell);
+void	ft_close_pipes(t_shell *shell);
+void	ft_wait_childs(t_shell *shell);
 
 #endif
