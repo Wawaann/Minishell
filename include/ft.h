@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/20 11:01:24 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:48:53 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ typedef struct s_shell
 }			t_shell;
 
 
+// Free
+void	free_double_tab(char **tab);
+void	free_pipes(t_shell *shell);
+void	free_cmds(t_shell *shell);
+void	free_path(t_shell *shell);
+void	free_all(t_shell *shell);
+
 // Exec
 void	ft_error(char *str);
 void	execute_simple_cmd(t_shell *shell);
 void	execute_command(t_shell *shell);
 
 // Exec Utils
-void	free_double_tab(char **tab);
 char	**get_all_path(t_shell *shell);
 char	*get_path(t_shell *shell, char *cmd_name);
 void	init_path(t_shell *shell);

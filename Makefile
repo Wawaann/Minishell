@@ -1,5 +1,6 @@
-SRC	=	main.c			\
-		exec.c	exec_utils.c \
+SRC	=	main.c					\
+		exec.c	exec_utils.c	\
+		free.c					\
 
 SRC		:=	$(addprefix src/, $(SRC))
 

@@ -6,24 +6,11 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/20 08:06:10 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:02:34 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
-
-void	free_double_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
 
 /*
 	- Browse environment variables until you find 'PATH'
@@ -106,7 +93,7 @@ void	init_path(t_shell *shell)
 	shell->path = malloc(sizeof(char *) * (shell->num_cmds + 1));
 	if (!shell->path)
 	{
-		// Do not forget to free memory before exit
+		free_all(shell);
 		ft_error("Error allocating memory for paths\n");
 	}
 	while (i < shell->num_cmds)

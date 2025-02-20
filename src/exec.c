@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/20 11:01:14 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:17:03 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	ft_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
+/*
+	- Create double tab for pipes
+		there are num_cmds-1 pipes => malloc(sizeof(int *) * (shell->num_cmds - 1))
+	- Create all necessary pipes
+		every pipe need two fd => malloc(sizeof(int) * 2);
+*/
+
 void	init_pipes(t_shell *shell)
 {
 	int	i;
@@ -25,7 +32,7 @@ void	init_pipes(t_shell *shell)
 	shell->pipes = malloc(sizeof(int *) * (shell->num_cmds - 1));
 	if (!shell->pipes)
 	{
-		// Free allocated memory
+		free_all(shell);
 		ft_error("Error allocating memory for pipes\n");
 	}
 	i = 0;
@@ -34,12 +41,12 @@ void	init_pipes(t_shell *shell)
 		shell->pipes[i] = malloc(sizeof(int) * 2);
 		if (!shell->pipes[i])
 		{
-			// Free allocated memory
+			free_all(shell);
 			ft_error("Error allocating memory for pipe\n");
 		}
 		if (pipe(shell->pipes[i]) == -1)
 		{
-			// Free allocated memory
+			free_all(shell);
 			ft_error("Pipe error\n");
 		}
 		i++;
@@ -84,17 +91,27 @@ void	redirect_pipes(t_shell *shell, int index)
 	}
 }
 
+/*
+	- Call redirect pipes function
+	- Checkif I have the path for the command
+	- Execute the command
+*/
+
 void	call_execve(t_shell *shell, int index)
 {
 	redirect_pipes(shell, index);
 	if (shell->path[index] == NULL)
 	{
-		// Free allocated memory here
+		free_all(shell);
 		ft_putstr_fd("Command not found\n", 2);
 		exit(127);
 	}
 	execve(shell->path[index], shell->cmds[index], shell->env);
 }
+
+/*
+	Parent process need to wait that all child are finished
+*/
 
 void	ft_wait_childs(t_shell *shell)
 {
@@ -108,6 +125,10 @@ void	ft_wait_childs(t_shell *shell)
 	}
 }
 
+/*
+	all pipes needs to be close because they are useless in parrent process
+*/
+
 void	ft_close_pipes(t_shell *shell)
 {
 	int		i;
@@ -120,6 +141,11 @@ void	ft_close_pipes(t_shell *shell)
 		i++;
 	}
 }
+
+/*
+	- Create a child process for every command
+	- Then execute each cmd on each child
+*/
 
 void	execute_pipe(t_shell *shell)
 {
@@ -159,10 +185,8 @@ void	execute_simple_cmd(t_shell *shell)
 
 void	execute_command(t_shell *shell)
 {
-	if (shell->num_cmds > 1) // One pipe at least
-	{
+	if (shell->num_cmds > 1)
 		execute_pipe(shell);
-	}
 	else
 		execute_simple_cmd(shell);
 }
