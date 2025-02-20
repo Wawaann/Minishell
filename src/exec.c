@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/20 12:17:03 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:21:36 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,13 +158,15 @@ void	execute_pipe(t_shell *shell)
 		pid = fork();
 		if (pid == -1)
 			ft_error("Error with fork");
-		else if (pid == 0)
+		if (pid == 0)
 		{
 			call_execve(shell, i);
 			exit(127);
 		}
 		i++;
 	}
+	ft_close_pipes(shell);
+	ft_wait_childs(shell);
 }
 
 void	execute_simple_cmd(t_shell *shell)

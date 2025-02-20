@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/20 12:02:34 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:39:06 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 		/usr/local/sbin
 		/usr/local/bin
 		/usr/sbin
-		/usr/bin
+		/usr/bin/
 		/sbin
 		/bin
 		/usr/games

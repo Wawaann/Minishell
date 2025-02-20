@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/20 12:01:31 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:44:12 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	creation_cmds_dur(t_shell *shell)
 
 	shell->cmds[1] = malloc(sizeof(char *) * 3);
 	shell->cmds[1][0] = ft_strdup("grep");
-	shell->cmds[1][1] = ft_strdup("z");
+	shell->cmds[1][1] = ft_strdup("e");
 	shell->cmds[1][2] = NULL;
 
 	shell->cmds[2] = malloc(sizeof(char *) * 3);
@@ -66,9 +66,6 @@ int	main(int ac, char **av, char **env)
 		init_pipes(&shell);
 
 		execute_command(&shell);
-
-		ft_close_pipes(&shell);
-		ft_wait_childs(&shell);
 
 		free_all(&shell);
 		free(shell.input);
