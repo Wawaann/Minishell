@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/20 14:44:12 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:29:23 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,33 @@
 
 void	creation_cmds_dur(t_shell *shell)
 {
-	shell->cmds = malloc(sizeof(char **) * 4);
+	// Allouer un tableau de 3 commandes + 1 NULL pour marquer la fin
+	shell->num_cmds = 3;
+	shell->cmds = malloc(sizeof(t_command) * (shell->num_cmds));
 
-	// Première commande (ex: ["ls", "-l", NULL])
-	shell->cmds[0] = malloc(sizeof(char *) * 3);
-	shell->cmds[0][0] = ft_strdup("ls");
-	shell->cmds[0][1] = ft_strdup("-l");
-	shell->cmds[0][2] = NULL;
+	// Commande 1: `ls -l`
+	shell->cmds[0].args = malloc(sizeof(char *) * 3);
+	shell->cmds[0].args[0] = ft_strdup("ls");
+	shell->cmds[0].args[1] = ft_strdup("-l");
+	shell->cmds[0].args[2] = NULL;
+	shell->cmds[0].in = NULL;
+	shell->cmds[0].out = NULL;
 
-	shell->cmds[1] = malloc(sizeof(char *) * 3);
-	shell->cmds[1][0] = ft_strdup("grep");
-	shell->cmds[1][1] = ft_strdup("e");
-	shell->cmds[1][2] = NULL;
+	// Commande 2: `grep e`
+	shell->cmds[1].args = malloc(sizeof(char *) * 3);
+	shell->cmds[1].args[0] = ft_strdup("grep");
+	shell->cmds[1].args[1] = ft_strdup("e");
+	shell->cmds[1].args[2] = NULL;
+	shell->cmds[1].in = NULL;
+	shell->cmds[1].out = NULL;
 
-	shell->cmds[2] = malloc(sizeof(char *) * 3);
-	shell->cmds[2][0] = ft_strdup("wc");
-	shell->cmds[2][1] = ft_strdup("-l");
-	shell->cmds[2][2] = NULL;
-
-	// Fin du tableau de commandes
-	shell->cmds[3] = NULL;
+	// Commande 3: `wc -l`
+	shell->cmds[2].args = malloc(sizeof(char *) * 3);
+	shell->cmds[2].args[0] = ft_strdup("wc");
+	shell->cmds[2].args[1] = ft_strdup("-l");
+	shell->cmds[2].args[2] = NULL;
+	shell->cmds[2].in = NULL;
+	shell->cmds[2].out = NULL;
 }
 
 void	init_shell(t_shell *shell, char **env)
@@ -41,7 +48,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;
-	shell->num_cmds = 3; // put back to 0 later
+	shell->num_cmds = 0;
 	shell->env = env;
 	shell->exit_status = 0;
 }
@@ -58,7 +65,7 @@ int	main(int ac, char **av, char **env)
 	{
 		shell.input = readline("$> ");
 		if (!shell.input || ft_strncmp(shell.input, "exit", 4) == 0)
-			break;
+			break ;
 		add_history(shell.input);
 
 		creation_cmds_dur(&shell);
@@ -70,6 +77,6 @@ int	main(int ac, char **av, char **env)
 		free_all(&shell);
 		free(shell.input);
 	}
-	rl_clear_history();
+	clear_history();
 	return (0);
 }

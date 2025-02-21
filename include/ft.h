@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/20 11:48:53 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:41:47 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,30 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 
+typedef struct s_redirection
+{
+	char			*file;		// Fichier d'entrée
+	int				type;		// Type de redirection
+}			t_redirection;
+
+typedef struct s_command
+{
+	char			**args;		// Arguments de la commande
+	t_redirection	*in;		// Redirections infile
+	t_redirection	*out;		// Redirections outfile
+}			t_command;
+
 typedef struct s_shell
 {
-	char	*input;			// Ligne de commande brute (récupérée avec readline)
-	char	**tokens;		// Commande découpée en tokens
-	char	***cmds;		// Tableau des commandes séparées par `|`
-	int		num_cmds;		// Nombre de commandes
-	char	**env;			// Environnement
-	char	**path;			// Chemin(s) vers la/les commande(s) (si plusieurs pipes, plusieurs chemins)
-	int		**pipes;		// double tab de pipes ({0 , 1} {2 , 3} ...) index 0 (0, 2)= lecture et index 1 (1, 3)= ecriture
-	int		exit_status;	// Dernier code de retour
-	int		*operator;		//[< , << , > , >>]
-	char	*infile;		// nom fu fichier
-	char	*outfile;		// nom du fichier
+	char		*input;         // Ligne de commande brute (récupérée avec readline)
+	char		**tokens;       // Commande découpée en tokens
+	char		**env;          // Environnement
+	char		**path;			// Chemin(s) vers la/les commande(s) (si plusieurs pipes, plusieurs chemins)
+	int			**pipes;		// double tab de pipes ({0 , 1} {2 , 3} ...) index 0 (0, 2)= lecture et index 1 (1, 3)= ecriture
+	int			num_cmds;       // Nombre de commandes
+	int			exit_status;    // Dernier code de retour
+	t_command	*cmds;          // Tableau de commandes
 }			t_shell;
-
 
 // Free
 void	free_double_tab(char **tab);

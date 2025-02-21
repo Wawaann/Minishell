@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/20 14:39:06 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:51:18 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	init_path(t_shell *shell)
 	}
 	while (i < shell->num_cmds)
 	{
-		shell->path[i] = get_path(shell, shell->cmds[i][0]);
+		shell->path[i] = get_path(shell, shell->cmds[i].args[0]);
 		i++;
 	}
 	shell->path[i] = NULL;

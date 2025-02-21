@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/20 14:21:36 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:29:54 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	call_execve(t_shell *shell, int index)
 		ft_putstr_fd("Command not found\n", 2);
 		exit(127);
 	}
-	execve(shell->path[index], shell->cmds[index], shell->env);
+	execve(shell->path[index], shell->cmds[index].args, shell->env);
 }
 
 /*
@@ -178,7 +178,7 @@ void	execute_simple_cmd(t_shell *shell)
 		ft_error("Error with fork");
 	if (pid == 0)
 	{
-		execve(shell->path[0], shell->cmds[0], shell->env);
+		execve(shell->path[0], shell->cmds[0].args, shell->env);
 		exit(127);
 	}
 	else
