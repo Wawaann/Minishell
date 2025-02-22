@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/22 12:31:22 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:44:02 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,9 @@ void	redirect_pipes(t_shell *shell, int index)
 
 void	redirect_outfiles(t_shell *shell, int index)
 {
-	int	fd = 0;
+	int	fd;
 
+	fd = 0;
 	if (shell->cmds[index].out)
 	{
 		if (shell->cmds[index].out->type == 3) // >
@@ -102,8 +103,24 @@ void	redirect_outfiles(t_shell *shell, int index)
 		else if (shell->cmds[index].out->type == 4) // >>
 			fd = open(shell->cmds[index].out->file, O_WRONLY | O_CREAT | O_APPEND, 0644); // APPEND pour ajouter a la suite de l'ancien resultat
 		if (fd == -1)
-			ft_error("Can not open outfile");
+			ft_error("No such file or directory\n");
 		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
+void	redirect_infiles(t_shell *shell, int index)
+{
+	int	fd;
+
+	fd = 0;
+	if (shell->cmds[index].in)
+	{
+		if (shell->cmds[index].in->type == 1)
+			fd = open(shell->cmds[index].in->file, O_RDONLY);
+		if (fd == -1)
+			ft_error("No such file or directory\n");
+		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
 }
@@ -117,6 +134,7 @@ void	redirect_outfiles(t_shell *shell, int index)
 void	call_execve(t_shell *shell, int index)
 {
 	redirect_pipes(shell, index);
+	redirect_infiles(shell, index);
 	redirect_outfiles(shell, index);
 
 	if (shell->path[index] == NULL)

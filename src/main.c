@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/22 16:26:52 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:42:10 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,25 @@
 void	creation_cmds_dur(t_shell *shell)
 {
 	// Allouer un tableau de 3 commandes + 1 NULL pour marquer la fin
-	shell->num_cmds = 3;
+	shell->num_cmds = 2;
 	shell->cmds = malloc(sizeof(t_command) * (shell->num_cmds));
 
 	// Commande 1: `ls -l`
 	shell->cmds[0].args = malloc(sizeof(char *) * 3);
-	shell->cmds[0].args[0] = ft_strdup("ls");
-	shell->cmds[0].args[1] = ft_strdup("-l");
+	shell->cmds[0].args[0] = ft_strdup("cat");
+	shell->cmds[0].args[1] = ft_strdup("-e");
 	shell->cmds[0].args[2] = NULL;
-	shell->cmds[0].in = NULL;
+	shell->cmds[0].in = malloc(sizeof(t_redirection));
+	shell->cmds[0].in->file = ft_strdup("infile.txt");
+	shell->cmds[0].in->type = 1;
 	shell->cmds[0].out = malloc(sizeof(t_redirection));
 	shell->cmds[0].out->file = ft_strdup("outfile.txt");
 	shell->cmds[0].out->type = 3;
 
 	// Commande 2: `grep e`
 	shell->cmds[1].args = malloc(sizeof(char *) * 3);
-	shell->cmds[1].args[0] = ft_strdup("grep");
-	shell->cmds[1].args[1] = ft_strdup("e");
+	shell->cmds[1].args[0] = ft_strdup("wc");
+	shell->cmds[1].args[1] = ft_strdup("-l");
 	shell->cmds[1].args[2] = NULL;
 	shell->cmds[1].in = NULL;
 	shell->cmds[1].out = NULL;
@@ -40,12 +42,12 @@ void	creation_cmds_dur(t_shell *shell)
 	// shell->cmds[1].out->type = 3;
 
 	// Commande 3: `wc -l`
-	shell->cmds[2].args = malloc(sizeof(char *) * 3);
-	shell->cmds[2].args[0] = ft_strdup("wc");
-	shell->cmds[2].args[1] = ft_strdup("-w");
-	shell->cmds[2].args[2] = NULL;
-	shell->cmds[2].in = NULL;
-	shell->cmds[2].out = NULL;
+	// shell->cmds[2].args = malloc(sizeof(char *) * 3);
+	// shell->cmds[2].args[0] = ft_strdup("wc");
+	// shell->cmds[2].args[1] = ft_strdup("-w");
+	// shell->cmds[2].args[2] = NULL;
+	// shell->cmds[2].in = NULL;
+	// shell->cmds[2].out = NULL;
 	// shell->cmds[2].out = malloc(sizeof(t_redirection));
 	// shell->cmds[2].out->file = ft_strdup("outfile.txt");
 	// shell->cmds[2].out->type = 3;
