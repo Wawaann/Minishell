@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/21 13:29:54 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:31:22 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,23 @@ void	redirect_pipes(t_shell *shell, int index)
 	}
 }
 
+void	redirect_outfiles(t_shell *shell, int index)
+{
+	int	fd = 0;
+
+	if (shell->cmds[index].out)
+	{
+		if (shell->cmds[index].out->type == 3) // >
+			fd = open(shell->cmds[index].out->file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // TRUNC pour ecraser l'ancien resultat (644 = Lecture + écriture pour le propriétaire les autres peuvent seulement lire)
+		else if (shell->cmds[index].out->type == 4) // >>
+			fd = open(shell->cmds[index].out->file, O_WRONLY | O_CREAT | O_APPEND, 0644); // APPEND pour ajouter a la suite de l'ancien resultat
+		if (fd == -1)
+			ft_error("Can not open outfile");
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
 /*
 	- Call redirect pipes function
 	- Checkif I have the path for the command
@@ -100,6 +117,8 @@ void	redirect_pipes(t_shell *shell, int index)
 void	call_execve(t_shell *shell, int index)
 {
 	redirect_pipes(shell, index);
+	redirect_outfiles(shell, index);
+
 	if (shell->path[index] == NULL)
 	{
 		free_all(shell);
