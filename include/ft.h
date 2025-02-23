@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/21 13:41:47 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:28:57 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_shell
 	int			**pipes;		// double tab de pipes ({0 , 1} {2 , 3} ...) index 0 (0, 2)= lecture et index 1 (1, 3)= ecriture
 	int			num_cmds;       // Nombre de commandes
 	int			exit_status;    // Dernier code de retour
+	int			hd_fd[2];		// file descriptor pour le fichier temp .heredoc
 	t_command	*cmds;          // Tableau de commandes
 }			t_shell;
 

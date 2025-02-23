@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/22 16:44:02 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:36:51 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,51 @@ void	redirect_infiles(t_shell *shell, int index)
 	int	fd;
 
 	fd = 0;
-	if (shell->cmds[index].in)
+	if (shell->cmds[index].in && shell->cmds[index].in->type == 1)
 	{
-		if (shell->cmds[index].in->type == 1)
-			fd = open(shell->cmds[index].in->file, O_RDONLY);
+		fd = open(shell->cmds[index].in->file, O_RDONLY);
 		if (fd == -1)
 			ft_error("No such file or directory\n");
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+	}
+}
+
+void	read_hd(t_shell *shell, char *limiter)
+{
+	char	*line;
+
+	shell->hd_fd[1] = open(".heredoc_tmp", O_WRONLY | O_CREAT | O_TRUNC, 00777);
+	if (shell->hd_fd[1] == -1)
+		ft_error("No such file or directory\n");
+	while (1)
+	{
+		line = readline("heredoc > ");
+		if (!line)
+			break ;
+		if (ft_strncmp(line, limiter, ft_strlen(line)) == 0)
+		{
+			free(line);
+			break ;
+		}
+		ft_putstr_fd(line, shell->hd_fd[1]);
+		ft_putstr_fd("\n", shell->hd_fd[1]);
+		free(line);
+	}
+	close(shell->hd_fd[1]);
+}
+
+void	redirect_heredoc(t_shell *shell, int index)
+{
+	if (shell->cmds[index].in && shell->cmds[index].in->type == 2)
+	{
+		read_hd(shell, shell->cmds[index].in->file);
+		shell->hd_fd[0] = open(".heredoc_tmp", O_RDONLY);
+		if (shell->hd_fd[0] == -1)
+			ft_error("No such file or directory\n");
+		dup2(shell->hd_fd[0], STDIN_FILENO);
+		close(shell->hd_fd[0]);
+		unlink(".heredoc_tmp");
 	}
 }
 
@@ -133,6 +170,7 @@ void	redirect_infiles(t_shell *shell, int index)
 
 void	call_execve(t_shell *shell, int index)
 {
+	redirect_heredoc(shell, index);
 	redirect_pipes(shell, index);
 	redirect_infiles(shell, index);
 	redirect_outfiles(shell, index);

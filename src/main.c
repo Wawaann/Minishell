@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/22 16:42:10 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:37:20 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@ void	creation_cmds_dur(t_shell *shell)
 	shell->cmds[0].args[1] = ft_strdup("-e");
 	shell->cmds[0].args[2] = NULL;
 	shell->cmds[0].in = malloc(sizeof(t_redirection));
-	shell->cmds[0].in->file = ft_strdup("infile.txt");
-	shell->cmds[0].in->type = 1;
-	shell->cmds[0].out = malloc(sizeof(t_redirection));
-	shell->cmds[0].out->file = ft_strdup("outfile.txt");
-	shell->cmds[0].out->type = 3;
+	shell->cmds[0].in->file = ft_strdup("toto");
+	shell->cmds[0].in->type = 2;
+	shell->cmds[0].out = NULL;
+	// shell->cmds[0].out = malloc(sizeof(t_redirection));
+	// shell->cmds[0].out->file = ft_strdup("outfile.txt");
+	// shell->cmds[0].out->type = 3;
 
 	// Commande 2: `grep e`
 	shell->cmds[1].args = malloc(sizeof(char *) * 3);
-	shell->cmds[1].args[0] = ft_strdup("wc");
-	shell->cmds[1].args[1] = ft_strdup("-l");
+	shell->cmds[1].args[0] = ft_strdup("grep");
+	shell->cmds[1].args[1] = ft_strdup("o");
 	shell->cmds[1].args[2] = NULL;
 	shell->cmds[1].in = NULL;
 	shell->cmds[1].out = NULL;
@@ -61,6 +62,8 @@ void	init_shell(t_shell *shell, char **env)
 	shell->num_cmds = 0;
 	shell->env = env;
 	shell->exit_status = 0;
+	shell->hd_fd[0] = -2;
+	shell->hd_fd[1] = -2;
 }
 
 int	main(int ac, char **av, char **env)
