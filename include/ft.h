@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/23 11:28:57 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:11:37 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@
 typedef struct s_redirection
 {
 	char			*file;		// Fichier d'entrée
-	int				type;		// Type de redirection
+	int				type;		// Type de redirection [<,<<,>,>>]
 }			t_redirection;
 
 typedef struct s_command
 {
 	char			**args;		// Arguments de la commande
+	int				count_in;
+	int				count_out;
 	t_redirection	*in;		// Redirections infile
 	t_redirection	*out;		// Redirections outfile
 }			t_command;

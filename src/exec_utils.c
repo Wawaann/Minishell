@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/21 12:51:18 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:16:03 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*get_path(t_shell *shell, char *cmd_name)
 	char	*path;
 	int		i;
 
+	if (access(cmd_name, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd_name));
 	all_path = get_all_path(shell);
 	i = 0;
 	while (all_path[i])

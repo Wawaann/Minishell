@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/23 12:36:51 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:14:46 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,42 +94,64 @@ void	redirect_pipes(t_shell *shell, int index)
 void	redirect_outfiles(t_shell *shell, int index)
 {
 	int	fd;
+	int	i;
 
 	fd = 0;
-	if (shell->cmds[index].out)
+	i = 0;
+	if (shell->cmds[index].count_out > 0)
 	{
-		if (shell->cmds[index].out->type == 3) // >
-			fd = open(shell->cmds[index].out->file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // TRUNC pour ecraser l'ancien resultat (644 = Lecture + écriture pour le propriétaire les autres peuvent seulement lire)
-		else if (shell->cmds[index].out->type == 4) // >>
-			fd = open(shell->cmds[index].out->file, O_WRONLY | O_CREAT | O_APPEND, 0644); // APPEND pour ajouter a la suite de l'ancien resultat
-		if (fd == -1)
-			ft_error("No such file or directory\n");
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
+		while (i < shell->cmds[index].count_out)
+		{
+			if (shell->cmds[index].out->type == 3) // >
+				fd = open(shell->cmds[index].out[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // TRUNC pour ecraser l'ancien resultat (644 = Lecture + écriture pour le propriétaire les autres peuvent seulement lire)
+			else if (shell->cmds[index].out->type == 4) // >>
+				fd = open(shell->cmds[index].out[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644); // APPEND pour ajouter a la suite de l'ancien resultat
+			if (fd == -1)
+				ft_error("No such file or directory\n");
+			if (i == shell->cmds[index].count_out - 1)
+				dup2(fd, STDOUT_FILENO);
+			close(fd);
+			i++;
+		}
 	}
 }
 
 void	redirect_infiles(t_shell *shell, int index)
 {
 	int	fd;
+	int	i;
 
-	fd = 0;
-	if (shell->cmds[index].in && shell->cmds[index].in->type == 1)
+	fd = -1;
+	i = 0;
+	if (shell->cmds[index].count_in > 0)
 	{
-		fd = open(shell->cmds[index].in->file, O_RDONLY);
-		if (fd == -1)
-			ft_error("No such file or directory\n");
-		dup2(fd, STDIN_FILENO);
-		close(fd);
+		while (i < shell->cmds[index].count_in)
+		{
+			if (shell->cmds[index].in[i].type == 1)
+			{
+				fd = open(shell->cmds[index].in[i].file, O_RDONLY);
+				if (fd == -1)
+					ft_error("No such file or directory\n");
+			}
+			i++;
+		}
+		i = shell->cmds[index].count_in - 1;
+		if (fd != -1 && shell->cmds[index].in[i].type == 1)
+		{
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
 	}
 }
 
-void	read_hd(t_shell *shell, char *limiter)
+void	read_hd(t_shell *shell, char *limiter, char *name)
 {
 	char	*line;
+	int		fd;
 
-	shell->hd_fd[1] = open(".heredoc_tmp", O_WRONLY | O_CREAT | O_TRUNC, 00777);
-	if (shell->hd_fd[1] == -1)
+	(void)shell;
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 00777);
+	if (fd == -1)
 		ft_error("No such file or directory\n");
 	while (1)
 	{
@@ -141,24 +163,61 @@ void	read_hd(t_shell *shell, char *limiter)
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, shell->hd_fd[1]);
-		ft_putstr_fd("\n", shell->hd_fd[1]);
+		ft_putstr_fd(line, fd);
+		ft_putstr_fd("\n", fd);
 		free(line);
 	}
-	close(shell->hd_fd[1]);
+	close(fd);
 }
 
 void	redirect_heredoc(t_shell *shell, int index)
 {
-	if (shell->cmds[index].in && shell->cmds[index].in->type == 2)
+	int		fd;
+	int		i;
+	char	*nb_heredoc;
+	char	*name;
+
+	fd = 0;
+	i = 0;
+	if (shell->cmds[index].in)
 	{
-		read_hd(shell, shell->cmds[index].in->file);
-		shell->hd_fd[0] = open(".heredoc_tmp", O_RDONLY);
-		if (shell->hd_fd[0] == -1)
-			ft_error("No such file or directory\n");
-		dup2(shell->hd_fd[0], STDIN_FILENO);
-		close(shell->hd_fd[0]);
-		unlink(".heredoc_tmp");
+		while (i < shell->cmds[index].count_in)
+		{
+			if (shell->cmds[index].in[i].type == 2)
+			{
+				nb_heredoc = ft_itoa(i);
+				name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
+				free(nb_heredoc);
+				read_hd(shell, shell->cmds[index].in[i].file, name);
+				free(name);
+			}
+			i++;
+		}
+
+		i = shell->cmds[index].count_in - 1;
+		if (shell->cmds[index].in[i].type == 2)
+		{
+			nb_heredoc = ft_itoa(shell->cmds[index].count_in - 1);
+			name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
+			free(nb_heredoc);
+			fd = open(name, O_RDONLY);
+			if (fd == -1)
+				ft_error("No such file or directory\n");
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+			free(name);
+		}
+
+		i = 0;
+		while (i < shell->cmds[index].count_in)
+		{
+			nb_heredoc = ft_itoa(i);
+			name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
+			free(nb_heredoc);
+			unlink(name);
+			free(name);
+			i++;
+		}
 	}
 }
 
@@ -253,6 +312,9 @@ void	execute_simple_cmd(t_shell *shell)
 		ft_error("Error with fork");
 	if (pid == 0)
 	{
+		redirect_heredoc(shell, 0);
+		redirect_infiles(shell, 0);
+		redirect_outfiles(shell, 0);
 		execve(shell->path[0], shell->cmds[0].args, shell->env);
 		exit(127);
 	}
