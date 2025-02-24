@@ -1,5 +1,7 @@
-SRC	=	main.c			\
-		get_command.c	\
+SRC	=	main.c							\
+		free.c							\
+		parsing/get_command.c			\
+		parsing/get_redirs.c			\
 
 SRC		:=	$(addprefix src/, $(SRC))
 
@@ -23,6 +25,7 @@ BOLD	=	\033[1m
 
 $(OBJ_DIR)%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/parsing
 	@echo "$(CYAN)Compiling:$(DEFAULT) $<"
 	@gcc $(FLAG) $(INCLUDE) -c $< -o $@
 
