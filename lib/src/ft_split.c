@@ -3,23 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:06:44 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/08 15:43:38 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:54:22 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int	is_sep(char c, char sep)
+int	is_sep(char c, char *sep)
 {
-	if (c == '\0' || c == sep)
+	size_t	i;
+
+	i = 0;
+	if (c == '\0')
 		return (1);
+	while (sep[i])
+	{
+		if (c == sep[i])
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
-size_t	count_word(const char *s, char ch)
+size_t	count_word(const char *s, char *sep)
 {
 	size_t	word;
 	size_t	i;
@@ -28,29 +37,29 @@ size_t	count_word(const char *s, char ch)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && is_sep(s[i], ch) > 0)
+		while (s[i] && is_sep(s[i], sep) > 0)
 			i++;
-		if (is_sep(s[i], ch) < 1)
+		if (is_sep(s[i], sep) < 1)
 			word++;
-		while (is_sep(s[i], ch) < 1)
+		while (is_sep(s[i], sep) < 1)
 			i++;
 	}
 	return (word);
 }
 
-void	get_word(char *word, const char *s, char ch)
+void	get_word(char *word, const char *s, char *sep)
 {
 	size_t	i;
 
 	i = 0;
-	while (is_sep(s[i], ch) < 1)
+	while (is_sep(s[i], sep) < 1)
 	{
 		word[i] = s[i];
 		i++;
 	}
 }
 
-void	get_spilt(char **split, const char *s, char ch)
+void	get_spilt(char **split, const char *s, char *sep)
 {
 	size_t	i;
 	size_t	j;
@@ -60,13 +69,13 @@ void	get_spilt(char **split, const char *s, char ch)
 	word = 0;
 	while (s[i])
 	{
-		if (is_sep(s[i], ch) < 1)
+		if (is_sep(s[i], sep) < 1)
 		{
 			j = 0;
-			while (is_sep(s[i + j], ch) < 1)
+			while (is_sep(s[i + j], sep) < 1)
 				j++;
 			split[word] = (char *)ft_calloc(j + 1, sizeof(char));
-			get_word(split[word], s + i, ch);
+			get_word(split[word], s + i, sep);
 			i += j;
 			word++;
 		}
@@ -75,13 +84,13 @@ void	get_spilt(char **split, const char *s, char ch)
 	}
 }
 
-char	**ft_split(const char *s, char ch)
+char	**ft_split(const char *s, char *sep)
 {
 	char	**split;
 	size_t	word;
 
-	word = count_word(s, ch);
+	word = count_word(s, sep);
 	split = (char **)ft_calloc(word + 1, sizeof(char *));
-	get_spilt(split, s, ch);
+	get_spilt(split, s, sep);
 	return (split);
 }

@@ -1,4 +1,5 @@
 SRC	=	main.c			\
+		get_command.c	\
 
 SRC		:=	$(addprefix src/, $(SRC))
 
