@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/24 16:08:56 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:47:56 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,6 @@ void	init_shell(t_shell *shell, char **env)
 	shell->num_cmds = 0;
 	shell->env = env;
 	shell->exit_status = 0;
-}
-
-char	**tokenize(char *input, int *num_cmds)
-{
-	char	**tokens;
-	int		i;
-
-	tokens = ft_split(input, " \t");
-	i = 0;
-	(*num_cmds) = 0;
-	while (tokens[i])
-	{
-		if (ft_strncmp(tokens[i], "|", 1) == 0)
-		{
-			(*num_cmds)++;
-		}
-		i++;
-	}
-	(*num_cmds)++;
-	return (tokens);
 }
 
 void	display_shell(t_shell *shell)

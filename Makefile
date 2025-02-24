@@ -2,6 +2,7 @@ SRC	=	main.c							\
 		free.c							\
 		parsing/get_command.c			\
 		parsing/get_redirs.c			\
+		parsing/tokenize.c				\
 
 SRC		:=	$(addprefix src/, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/24 16:04:30 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:48:16 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_shell
 void				free_shell(t_shell *shell);
 
 int					is_redirs(char *token);
+char				**tokenize(char *input, int *num_cmds);
 void				get_number_redir(char **tokens, int *count, bool in);
 void				get_redirs(t_command *cmds, char **tokens, int *i);
 t_command			*get_commands(char **tokens, int cmd_nums);
