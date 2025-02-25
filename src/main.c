@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 15:34:51 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:55:25 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	main(int ac, char **av, char **env)
 		add_history(shell.input);
 		shell.tokens = tokenize(shell.input, &shell.num_cmds);
 		shell.cmds = get_commands(shell.tokens, shell.num_cmds);
-		display_shell(&shell);
+		//display_shell(&shell);
 
 		init_path(&shell);
 		init_pipes(&shell);

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 15:02:53 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/24 15:48:23 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:54:50 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	is_redirs(char *token)
 {
-	if (ft_strncmp(token, "<", 1) == 0)
+	if (ft_strncmp(token, "<", 2) == 0)
 		return (1);
 	if (ft_strncmp(token, "<<", 2) == 0)
 		return (2);
-	if (ft_strncmp(token, ">", 1) == 0)
+	if (ft_strncmp(token, ">", 2) == 0)
 		return (3);
 	if (ft_strncmp(token, ">>", 2) == 0)
 		return (4);

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 14:58:13 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:45:04 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_whitespace(char c)
 	return (c == ' ' || c == '\t');
 }
 
-bool	is_sep(char c)
+static bool	is_sep(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }

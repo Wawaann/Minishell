@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 15:33:24 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:43:40 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 
 typedef struct s_redirs
 {
@@ -49,6 +50,7 @@ typedef struct s_shell
 }					t_shell;
 
 // Free
+void				free_tokens(char **tokens);
 void				free_shell(t_shell *shell);
 
 // Parsing
