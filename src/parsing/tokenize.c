@@ -6,28 +6,81 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/24 17:40:01 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:58:13 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-char	**tokenize(char *input, int *num_cmds)
+bool	is_whitespace(char c)
 {
-	char	**tokens;
-	int		i;
+	return (c == ' ' || c == '\t');
+}
 
-	tokens = ft_split(input, " \t");
-	i = 0;
-	(*num_cmds) = 0;
-	while (tokens[i])
+bool	is_sep(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}
+
+char	*extract_token(char *input, int *i)
+{
+	int		start;
+	char	quote;
+
+	start = *i;
+	quote = 0;
+	if (input[*i] == '\'' || input[*i] == '"')
 	{
-		if (ft_strncmp(tokens[i], "|", 1) == 0)
-		{
-			(*num_cmds)++;
-		}
-		i++;
+		quote = input[(*i)];
+		(*i)++;
+		while (input[*i] && input[*i] != quote)
+			(*i)++;
+		if (input[*i] == quote)
+			(*i)++;
 	}
-	(*num_cmds)++;
+	else
+		while (input[*i] && !is_whitespace(input[*i]) && !is_sep(input[*i]))
+			(*i)++;
+	return (ft_substr(input, start, *i - start));
+}
+
+char	*extract_operator(char *input, int *i)
+{
+	int	start;
+
+	start = *i;
+	if ((input[*i] == '<' && input[*i + 1] == '<') ||
+		(input[*i] == '>' && input[*i + 1] == '>'))
+		(*i) += 2;
+	else
+		(*i)++;
+	return (ft_substr(input, start, *i - start));
+}
+
+char	**tokenize(char *input, int *cmd_nums)
+{
+	int		i;
+	int		count;
+	char	*token;
+	char	**tokens;
+
+	i = 0;
+	count = 0;
+	tokens = ft_calloc(100, sizeof(char *));
+	(*cmd_nums) = count_cmd(input);
+	while (input[i])
+	{
+		while (input[i] && is_whitespace(input[i]))
+			i++;
+		if (!input[i])
+			break ;
+		if (is_sep(input[i]))
+			token = extract_operator(input, &i);
+		else
+			token = extract_token(input, &i);
+		if (token)
+			tokens[count++] = token;
+	}
+	tokens[count] = NULL;
 	return (tokens);
 }

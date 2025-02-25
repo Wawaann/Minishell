@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/24 15:52:42 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:52:35 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	init_cmd(t_command *cmd, char **tokens)
 {
 	get_number_redir(tokens, &cmd->in_count, true);
 	get_number_redir(tokens, &cmd->out_count, false);
-	printf("in_count: %d\n", cmd->in_count);
-	printf("out_count: %d\n", cmd->out_count);
 	cmd->args = ft_calloc(get_number_args(tokens) + 1, sizeof(char *));
 	cmd->in = ft_calloc(cmd->in_count + 1, sizeof(t_redirs));
 	cmd->out = ft_calloc(cmd->out_count + 1, sizeof(t_redirs));
