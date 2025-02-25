@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/24 18:14:46 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:20:04 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,10 @@ void	redirect_infiles(t_shell *shell, int index)
 			{
 				fd = open(shell->cmds[index].in[i].file, O_RDONLY);
 				if (fd == -1)
+				{
+					printf("commande : [%d]\n", index);
 					ft_error("No such file or directory\n");
+				}
 			}
 			i++;
 		}
@@ -152,7 +155,7 @@ void	read_hd(t_shell *shell, char *limiter, char *name)
 	(void)shell;
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 00777);
 	if (fd == -1)
-		ft_error("No such file or directory\n");
+		ft_error("No such file or directory hd\n");
 	while (1)
 	{
 		line = readline("heredoc > ");
@@ -193,7 +196,6 @@ void	redirect_heredoc(t_shell *shell, int index)
 			}
 			i++;
 		}
-
 		i = shell->cmds[index].count_in - 1;
 		if (shell->cmds[index].in[i].type == 2)
 		{
@@ -202,24 +204,32 @@ void	redirect_heredoc(t_shell *shell, int index)
 			free(nb_heredoc);
 			fd = open(name, O_RDONLY);
 			if (fd == -1)
-				ft_error("No such file or directory\n");
+				ft_error("No such file or directory hd2\n");
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 			free(name);
 		}
-
-		i = 0;
-		while (i < shell->cmds[index].count_in)
-		{
-			nb_heredoc = ft_itoa(i);
-			name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
-			free(nb_heredoc);
-			unlink(name);
-			free(name);
-			i++;
-		}
 	}
 }
+
+void	cleanup_heredocs(t_shell *shell)
+{
+	int		i;
+	char	*nb_heredoc;
+	char	*name;
+
+	i = 0;
+	while (i < shell->cmds[0].count_in)
+	{
+		nb_heredoc = ft_itoa(i);
+		name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
+		free(nb_heredoc);
+		unlink(name);
+		free(name);
+		i++;
+	}
+}
+
 
 /*
 	- Call redirect pipes function
@@ -229,9 +239,9 @@ void	redirect_heredoc(t_shell *shell, int index)
 
 void	call_execve(t_shell *shell, int index)
 {
+	redirect_infiles(shell, index);
 	redirect_heredoc(shell, index);
 	redirect_pipes(shell, index);
-	redirect_infiles(shell, index);
 	redirect_outfiles(shell, index);
 
 	if (shell->path[index] == NULL)
@@ -301,6 +311,7 @@ void	execute_pipe(t_shell *shell)
 	}
 	ft_close_pipes(shell);
 	ft_wait_childs(shell);
+	cleanup_heredocs(shell);
 }
 
 void	execute_simple_cmd(t_shell *shell)
@@ -312,8 +323,8 @@ void	execute_simple_cmd(t_shell *shell)
 		ft_error("Error with fork");
 	if (pid == 0)
 	{
-		redirect_heredoc(shell, 0);
 		redirect_infiles(shell, 0);
+		redirect_heredoc(shell, 0);
 		redirect_outfiles(shell, 0);
 		execve(shell->path[0], shell->cmds[0].args, shell->env);
 		exit(127);
