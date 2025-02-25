@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:00:37 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/24 16:12:09 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:31:12 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,33 @@ void	free_tokens(char **tokens)
 	while (tokens[i])
 		free(tokens[i++]);
 	free(tokens);
+}
+
+void	free_pipes(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->num_cmds - 1)
+	{
+		free(shell->pipes[i]);
+		i++;
+	}
+	free(shell->pipes);
+}
+
+void	free_path(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->num_cmds)
+	{
+		if (shell->path[i])
+			free(shell->path[i]);
+		i++;
+	}
+	free(shell->path);
 }
 
 void	free_cmds(t_command *cmds)
@@ -52,4 +79,8 @@ void	free_shell(t_shell *shell)
 	free(shell->input);
 	free_tokens(shell->tokens);
 	free_cmds(shell->cmds);
+	if (shell->path)
+		free_path(shell);
+	if (shell->pipes)
+		free_pipes(shell);
 }
