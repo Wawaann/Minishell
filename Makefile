@@ -1,7 +1,10 @@
 SRC	=	main.c							\
 		free.c							\
-		exec.c							\
-		exec_utils.c					\
+		exec/exec.c						\
+		exec/exec_utils.c				\
+		exec/handle_heredoc.c			\
+		exec/handle_pipes.c				\
+		exec/handle_redir.c				\
 		parsing/get_command.c			\
 		parsing/get_redirs.c			\
 		parsing/tokenize.c				\
@@ -30,6 +33,7 @@ BOLD	=	\033[1m
 $(OBJ_DIR)%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parsing
+	@mkdir -p $(OBJ_DIR)/exec
 	@echo "$(CYAN)Compiling:$(DEFAULT) $<"
 	@gcc $(FLAG) $(INCLUDE) -c $< -o $@
 
