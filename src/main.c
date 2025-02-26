@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 15:55:25 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:45:30 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	main(int ac, char **av, char **env)
 	init_shell(&shell, env);
 	while (1)
 	{
-		shell.input = readline("$> ");
+		shell.input = readline("mini $> ");
 		if (!shell.input || ft_strncmp(shell.input, "exit", 4) == 0)
 			break ;
 		add_history(shell.input);

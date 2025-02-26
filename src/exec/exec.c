@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/26 12:00:23 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:54:17 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,32 @@ void	execute_simple_cmd(t_shell *shell)
 
 void	execute_command(t_shell *shell)
 {
+	if (ft_strcmp(shell->cmds[0].args[0], "pwd") == 0)
+	{
+		ft_pwd();
+		return ;
+	}
+	if (ft_strcmp(shell->cmds[0].args[0], "cd") == 0)
+	{
+		ft_cd(shell, 0);
+		return ;
+	}
+	if (ft_strcmp(shell->cmds[0].args[0], "env") == 0)
+	{
+		printf("ma fonction env\n");
+		ft_env(shell);
+		return ;
+	}
+	if (ft_strcmp(shell->cmds[0].args[0], "export") == 0)
+	{
+		ft_export(shell, shell->cmds[0].args[1]);
+		return ;
+	}
+	if (ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
+	{
+		ft_unset(shell, shell->cmds[0].args[1]);
+		return ;
+	}
 	if (shell->num_cmds > 1)
 		execute_pipe(shell);
 	else
