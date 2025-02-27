@@ -2,6 +2,7 @@ SRC	=	main.c							\
 		free.c							\
 		exec.c							\
 		exec_utils.c					\
+		parsing/error.c					\
 		parsing/get_command.c			\
 		parsing/get_redirs.c			\
 		parsing/tokenize.c				\

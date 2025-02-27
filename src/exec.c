@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/25 16:12:08 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:51:01 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_pipes(t_shell *shell)
 {
 	int	i;
 
-	shell->pipes = malloc(sizeof(int *) * (shell->num_cmds - 1));
+	shell->pipes = ft_calloc(shell->num_cmds - 1, sizeof(int *));
 	if (!shell->pipes)
 	{
 		free_shell(shell);
@@ -259,12 +259,14 @@ void	call_execve(t_shell *shell, int index)
 
 void	ft_wait_childs(t_shell *shell)
 {
-	int		i;
+	int	i;
+	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < shell->num_cmds)
 	{
-		wait(&shell->exit_status);
+		wait(&status);
 		i++;
 	}
 }
@@ -317,8 +319,10 @@ void	execute_pipe(t_shell *shell)
 void	execute_simple_cmd(t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
+	status = 0;
 	if (pid == -1)
 		ft_error("Error with fork");
 	if (pid == 0)
@@ -330,7 +334,7 @@ void	execute_simple_cmd(t_shell *shell)
 		exit(127);
 	}
 	else
-		wait(&shell->exit_status);
+		wait(&status);
 }
 
 void	execute_command(t_shell *shell)

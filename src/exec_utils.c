@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/25 15:44:40 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:47:12 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_path(t_shell *shell, char *cmd_name)
 	char	*path;
 	int		i;
 
-	if (access(cmd_name, F_OK | X_OK) == 0)
+	if (cmd_name && access(cmd_name, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd_name));
 	all_path = get_all_path(shell);
 	i = 0;
@@ -92,7 +92,7 @@ void	init_path(t_shell *shell)
 	int	i;
 
 	i = 0;
-	shell->path = malloc(sizeof(char *) * (shell->num_cmds + 1));
+	shell->path = ft_calloc(shell->num_cmds + 1, sizeof(char *));
 	if (!shell->path)
 	{
 		free_shell(shell);
@@ -103,5 +103,4 @@ void	init_path(t_shell *shell)
 		shell->path[i] = get_path(shell, shell->cmds[i].args[0]);
 		i++;
 	}
-	shell->path[i] = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 15:55:25 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:00:17 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	init_shell(t_shell *shell, char **env)
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;
+	shell->path = NULL;
+	shell->pipes = NULL;
 	shell->num_cmds = 0;
 	shell->env = env;
 	shell->exit_status = 0;
@@ -106,19 +108,20 @@ int	main(int ac, char **av, char **env)
 	init_shell(&shell, env);
 	while (1)
 	{
+		printf("exit_status: %d\n", shell.exit_status);
 		shell.input = readline("$> ");
 		if (!shell.input || ft_strncmp(shell.input, "exit", 4) == 0)
 			break ;
 		add_history(shell.input);
 		shell.tokens = tokenize(shell.input, &shell.num_cmds);
-		shell.cmds = get_commands(shell.tokens, shell.num_cmds);
-		//display_shell(&shell);
-
-		init_path(&shell);
-		init_pipes(&shell);
-
-		execute_command(&shell);
-
+		if (check_error(&shell))
+		{
+			shell.cmds = get_commands(shell.tokens, shell.num_cmds);
+			display_shell(&shell);
+			init_path(&shell);
+			init_pipes(&shell);
+			execute_command(&shell);
+		}
 		free_shell(&shell);
 	}
 	clear_history();
