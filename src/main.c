@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/27 12:17:27 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:23:10 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		shell.input = readline("$> ");
-		if (!shell.input || ft_strncmp(shell.input, "exit", 4) == 0)
+		if (!shell.input)
 			break ;
 		add_history(shell.input);
 		shell.tokens = tokenize(shell.input, &shell.num_cmds);

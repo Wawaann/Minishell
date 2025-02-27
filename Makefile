@@ -15,6 +15,7 @@ SRC	=	main.c							\
 		builts_in/env.c					\
 		builts_in/export.c				\
 		builts_in/unset.c				\
+		builts_in/exit.c				\
 
 SRC		:=	$(addprefix src/, $(SRC))
 

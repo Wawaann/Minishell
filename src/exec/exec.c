@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/26 17:54:17 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:19:23 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	execute_command(t_shell *shell)
 		ft_unset(shell, shell->cmds[0].args[1]);
 		return ;
 	}
+	if (ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
+		ft_exit(shell);
 	if (shell->num_cmds > 1)
 		execute_pipe(shell);
 	else
