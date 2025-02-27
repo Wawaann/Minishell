@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:41:27 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/26 11:58:56 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:21:15 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_pipes(t_shell *shell)
 {
 	int	i;
 
-	shell->pipes = malloc(sizeof(int *) * (shell->num_cmds - 1));
+	shell->pipes = ft_calloc(shell->num_cmds - 1, sizeof(int *));
 	if (!shell->pipes)
 	{
 		free_shell(shell);

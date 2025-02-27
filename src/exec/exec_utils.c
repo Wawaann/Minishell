@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-<<<<<<< HEAD:src/exec_utils.c
-/*   Updated: 2025/02/27 11:47:12 by ebigotte         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/26 12:01:09 by cedmarti         ###   ########.fr       */
->>>>>>> exec:src/exec/exec_utils.c
+/*   Updated: 2025/02/27 12:15:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
