@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/27 14:23:10 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:42:20 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,36 +86,36 @@ void	init_shell(t_shell *shell, char **env)
 	shell->exit_status = 0;
 }
 
-// void	display_shell(t_shell *shell)
-// {
-// 	printf("input: %s\n", shell->input);
-// 	printf("tokens: ");
-// 	for (int i = 0; shell->tokens[i]; i++)
-// 		printf("[%s] ", shell->tokens[i]);
-// 	printf("\n");
-// 	printf("num_cmds: %d\n", shell->num_cmds);
-// 	printf("cmds:\n");
-// 	for (int i = 0; i < shell->num_cmds; i++)
-// 	{
-// 		printf("cmd %d:\n", i);
-// 		printf("args: ");
-// 		for (int j = 0; shell->cmds[i].args[j]; j++)
-// 			printf("[%s] ", shell->cmds[i].args[j]);
-// 		printf("\n");
-// 		printf("in_count: %d\n", shell->cmds[i].in_count);
-// 		printf("in: ");
-// 		for (int j = 0; j < shell->cmds[i].in_count; j++)
-// 			printf("[%d: %s] ", shell->cmds[i].in[j].type,
-// 				shell->cmds[i].in[j].file);
-// 		printf("\n");
-// 		printf("out_count: %d\n", shell->cmds[i].out_count);
-// 		printf("out: ");
-// 		for (int j = 0; j < shell->cmds[i].out_count; j++)
-// 			printf("[%d: %s] ", shell->cmds[i].out[j].type,
-// 				shell->cmds[i].out[j].file);
-// 		printf("\n");
-// 	}
-// }
+void	display_shell(t_shell *shell)
+{
+	printf("input: %s\n", shell->input);
+	printf("tokens: ");
+	for (int i = 0; shell->tokens[i]; i++)
+		printf("[%s] ", shell->tokens[i]);
+	printf("\n");
+	printf("num_cmds: %d\n", shell->num_cmds);
+	printf("cmds:\n");
+	for (int i = 0; i < shell->num_cmds; i++)
+	{
+		printf("cmd %d:\n", i);
+		printf("args: ");
+		for (int j = 0; shell->cmds[i].args[j]; j++)
+			printf("[%s] ", shell->cmds[i].args[j]);
+		printf("\n");
+		printf("in_count: %d\n", shell->cmds[i].in_count);
+		printf("in: ");
+		for (int j = 0; j < shell->cmds[i].in_count; j++)
+			printf("[%d: %s] ", shell->cmds[i].in[j].type,
+				shell->cmds[i].in[j].file);
+		printf("\n");
+		printf("out_count: %d\n", shell->cmds[i].out_count);
+		printf("out: ");
+		for (int j = 0; j < shell->cmds[i].out_count; j++)
+			printf("[%d: %s] ", shell->cmds[i].out[j].type,
+				shell->cmds[i].out[j].file);
+		printf("\n");
+	}
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -135,6 +135,7 @@ int	main(int ac, char **av, char **env)
 		if (check_error(&shell))
 		{
 			shell.cmds = get_commands(shell.tokens, shell.num_cmds);
+			//display_shell(&shell);
 			init_path(&shell);
 			init_pipes(&shell);
 			execute_command(&shell);

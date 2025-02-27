@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/27 14:20:24 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:34:19 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void				ft_cd(t_shell *shell, int index);
 void				ft_env(t_shell *shell);
 void				ft_export(t_shell *shell, char *var);
 void				ft_unset(t_shell *shell, char *var);
+void				ft_echo(char **args);
 void				ft_exit(t_shell *shell);
 
 #endif
