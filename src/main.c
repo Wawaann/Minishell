@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/27 12:00:17 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:13:59 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,25 @@
 // 	// shell->cmds[2].out->type = 3;
 // }
 
+void	duplicate_env(t_shell *shell, char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	shell->env = malloc(sizeof(char *) * (i + 1));
+	if (!shell->env)
+		return ;
+	i = 0;
+	while(env[i])
+	{
+		shell->env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	shell->env[i] = NULL;
+}
+
 void	init_shell(t_shell *shell, char **env)
 {
 	shell->input = NULL;
@@ -63,7 +82,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->path = NULL;
 	shell->pipes = NULL;
 	shell->num_cmds = 0;
-	shell->env = env;
+	duplicate_env(shell, env);
 	shell->exit_status = 0;
 }
 
@@ -124,6 +143,7 @@ int	main(int ac, char **av, char **env)
 		}
 		free_shell(&shell);
 	}
+	free_tokens(shell.env);
 	clear_history();
 	return (0);
 }

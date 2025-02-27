@@ -3,29 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
+<<<<<<< HEAD:src/exec_utils.c
 /*   Updated: 2025/02/27 11:47:12 by ebigotte         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/26 12:01:09 by cedmarti         ###   ########.fr       */
+>>>>>>> exec:src/exec/exec_utils.c
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
-
-/*
-	- Browse environment variables until you find 'PATH'
-	- Return double tab with all path possibles separate by ':'
-		/home/cedmarti/bin
-		/usr/local/sbin
-		/usr/local/bin
-		/usr/sbin
-		/usr/bin/
-		/sbin
-		/bin
-		/usr/games
-		/usr/local/games
-		/snap/bin
-*/
 
 char	**get_all_path(t_shell *shell)
 {
@@ -44,13 +33,6 @@ char	**get_all_path(t_shell *shell)
 	}
 	return (NULL);
 }
-
-/*
-	- Try all path to find the right one
-		- add "/" + "command name" to the path
-		- check with access() if the command exist and if we have the right to execute it
-	- Return the right pass if there is one
-*/
 
 char	*get_path(t_shell *shell, char *cmd_name)
 {
@@ -79,13 +61,6 @@ char	*get_path(t_shell *shell, char *cmd_name)
 	free_tokens(all_path);
 	return (NULL);
 }
-
-/*
-	multiple commands = multiple paths
-	- allocate memory for a double tab of paths
-	- save each good path into the double tab
-	(path[0] = path for command[0] ...)
-*/
 
 void	init_path(t_shell *shell)
 {
