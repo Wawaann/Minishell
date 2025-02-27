@@ -6,13 +6,13 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/26 17:28:48 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:13:32 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-char	*ft_strndup(const char *s, int n)
+static char	*ft_strndup(const char *s, int n)
 {
 	int		i;
 	char	*dup;
@@ -33,7 +33,7 @@ char	*ft_strndup(const char *s, int n)
 	return (dup);
 }
 
-char	**realloc_env(char **env, int size)
+static char	**realloc_env(char **env, int size)
 {
 	char	**new_env;
 	int		i;
@@ -44,10 +44,11 @@ char	**realloc_env(char **env, int size)
 	i = 0;
 	while (env[i] && i < size)
 	{
-		new_env[i] = env[i];
+		new_env[i] = ft_strdup(env[i]);
 		i++;
 	}
 	new_env[i] = NULL;
+	free_tokens(env);
 	return (new_env);
 }
 
@@ -58,17 +59,10 @@ void	ft_export(t_shell *shell, char *var)
 	char	*name;
 	char	*equal_pos;
 
-	// Verif format VAR=VALUE
 	equal_pos = ft_strchr(var, '=');
 	if (!var || !equal_pos)
 		return ;
-
-	// Recuperer le nom de la variable pour le chercher dans la liste
 	name = ft_strndup(var, equal_pos - var);
-
-	// Si variable existe
-		// Supprimer ancienne valeur
-		// Mettre nouvelle valeur
 	i = 0;
 	while (shell->env[i])
 	{
@@ -82,11 +76,6 @@ void	ft_export(t_shell *shell, char *var)
 		}
 		i++;
 	}
-
-	// Sinon
-		// Aggrandir le tableau de 1
-		// Ajouter nouvelle variable et valeur
-		// Null termine le tab
 	shell->env = realloc_env(shell->env, i + 1);
 	shell->env[i] = ft_strdup(var);
 	shell->env[i + 1] = NULL;
