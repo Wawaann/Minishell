@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 15:45:04 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:17:56 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ char	*extract_operator(char *input, int *i)
 	int	start;
 
 	start = *i;
-	if ((input[*i] == '<' && input[*i + 1] == '<') ||
-		(input[*i] == '>' && input[*i + 1] == '>'))
+	if ((input[*i] == '<' && input[*i + 1] == '<')
+		|| (input[*i] == '>' && input[*i + 1] == '>'))
 		(*i) += 2;
 	else
 		(*i)++;

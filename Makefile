@@ -11,6 +11,11 @@ SRC	=	main.c							\
 		parsing/get_redirs.c			\
 		parsing/tokenize.c				\
 		parsing/utils.c					\
+		builts_in/pwd.c					\
+		builts_in/cd.c					\
+		builts_in/env.c					\
+		builts_in/export.c				\
+		builts_in/unset.c				\
 
 SRC		:=	$(addprefix src/, $(SRC))
 
@@ -35,6 +40,8 @@ BOLD	=	\033[1m
 $(OBJ_DIR)%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parsing
+	@mkdir -p $(OBJ_DIR)/exec
+	@mkdir -p $(OBJ_DIR)/builts_in
 	@echo "$(CYAN)Compiling:$(DEFAULT) $<"
 	@gcc $(FLAG) $(INCLUDE) -c $< -o $@
 
