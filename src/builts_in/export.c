@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 14:21:57 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:51:30 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,23 @@ int	is_valid_varname(const char *name)
 	return (1);
 }
 
-
-void	ft_export(t_shell *shell, char *var)
+void	print_export(t_shell *shell)
 {
-	int		i;
-	char	*name;
-	char	*equal_pos;
+	int	i;
 
-	equal_pos = ft_strchr(var, '=');
-	if (equal_pos)
-		name = ft_strndup(var, equal_pos - var);
-	else
-		name = ft_strdup(var);
-
-	if (!is_valid_varname(name))
+	i = 0;
+	while (shell->env[i])
 	{
-		ft_putstr_fd("export: not a valid identifier\n", 2);
-		free(name);
-		shell->exit_status = 1;
-		return ;
+		printf("declare -x ");
+		printf("%s\n", shell->env[i]);
+		i++;
 	}
+}
+
+void	add_update_env(t_shell *shell, char *var, char *name, char *has_value)
+{
+	int	i;
+
 	i = 0;
 	while (shell->env[i])
 	{
@@ -95,12 +92,11 @@ void	ft_export(t_shell *shell, char *var)
 			(shell->env[i][ft_strlen(name)] == '='
 			|| shell->env[i][ft_strlen(name)] == '\0'))
 		{
-			if (equal_pos)
+			if (has_value)
 			{
 				free(shell->env[i]);
 				shell->env[i] = ft_strdup(var);
 			}
-			free(name);
 			return ;
 		}
 		i++;
@@ -108,6 +104,41 @@ void	ft_export(t_shell *shell, char *var)
 	shell->env = realloc_env(shell->env, i + 1);
 	shell->env[i] = ft_strdup(var);
 	shell->env[i + 1] = NULL;
-	free(name);
-	shell->exit_status = 0;
+}
+
+void	ft_export(t_shell *shell, char **args)
+{
+	int		i;
+	char	*name;
+	char	*equal_pos;
+
+	if (!args[1])
+	{
+		print_export(shell);
+		shell->exit_status = 0;
+		return ;
+	}
+	i = 1;
+	while (args[i])
+	{
+		equal_pos = ft_strchr(args[i], '=');
+		if (equal_pos)
+		{
+			name = ft_strndup(args[i], equal_pos - args[i]);
+			printf("name = %s\n", name);
+		}
+		else
+			name = ft_strdup(args[i]);
+		if (!is_valid_varname(name))
+		{
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			shell->exit_status = 1;
+		}
+		else
+			add_update_env(shell, args[i], name, equal_pos);
+		free(name);
+		i++;
+	}
 }

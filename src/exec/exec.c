@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 14:45:48 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:34:46 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute_command(t_shell *shell)
 	}
 	if (ft_strcmp(shell->cmds[0].args[0], "export") == 0)
 	{
-		ft_export(shell, shell->cmds[0].args[1]);
+		ft_export(shell, shell->cmds[0].args);
 		return ;
 	}
 	if (ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
