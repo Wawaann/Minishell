@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 14:45:48 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:55:49 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	execute_command(t_shell *shell)
 		return ;
 	}
 	if (ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
-		ft_exit(shell);
+		ft_exit(shell, shell->cmds[0].args);
 	if (shell->num_cmds > 1)
 		execute_pipe(shell);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:49:31 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/08 14:43:58 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:12:52 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,18 @@
 
 int	ft_isdigit(int c)
 {
-	if (c >= '0' && c <= '9')
+	if ((c >= '0' && c <= '9') || c == '-' || c == '+')
 		return (1);
 	return (0);
+}
+
+int	ft_strdigit(char *str)
+{
+	while (*str)
+	{
+		if (ft_isdigit(*str) == 0)
+			return (0);
+		str++;
+	}
+	return (1);
 }

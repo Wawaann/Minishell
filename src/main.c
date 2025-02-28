@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 14:45:17 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:53:02 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	minishell(t_shell *shell, char **env)
 	{
 		prompt = get_prompt(shell->env);
 		shell->input = readline(prompt);
-		if (!shell->input || ft_strncmp(shell->input, "exit", 4) == 0)
+		if (!shell->input)
 			break ;
 		add_history(shell->input);
 		shell->tokens = tokenize(shell->input, &shell->num_cmds);

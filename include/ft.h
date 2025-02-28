@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 14:45:21 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:55:23 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ void				ft_env(t_shell *shell);
 void				ft_export(t_shell *shell, char *var);
 void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
-void				ft_exit(t_shell *shell);
+void				ft_exit(t_shell *shell, char **args);
 
 #endif
