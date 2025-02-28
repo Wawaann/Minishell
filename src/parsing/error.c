@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:28:51 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/27 12:07:43 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:32:56 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ bool	valide_pipe(char **tokens, int i, int *exit_status)
 		*exit_status = 2;
 		return (false);
 	}
-	if (ft_strncmp(tokens[i], "|", 2) == 0 && ft_strncmp(tokens[i + 1], "|", 2) == 0)
+	if (ft_strncmp(tokens[i], "|", 2) == 0 && ft_strncmp(tokens[i + 1], "|",
+			2) == 0)
 	{
 		printf("syntax error near unexpected token `|'\n");
 		*exit_status = 2;

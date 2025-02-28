@@ -42,9 +42,8 @@ SRC	=	ft_atoi.c				\
 
 SRC		:=	$(addprefix src/, $(SRC))
 
-OBJ	=	$(SRC:.c=.o)
-
-OBJALL	=	$(OBJ) $(LST:.c=.o)
+OBJ_DIR	=	obj/
+OBJ		=	$(patsubst src/%.c,$(OBJ_DIR)%.o,$(SRC))
 
 INCLUDE	=	-I./
 
@@ -54,7 +53,8 @@ NAME	=	libft.a
 
 all:	$(NAME)
 
-%.o: %.c
+$(OBJ_DIR)%.o: src/%.c
+	@mkdir -p $(OBJ_DIR)
 	@gcc $(FLAG) $(INCLUDE) -c $< -o $@
 
 $(NAME):	$(OBJ)
@@ -62,7 +62,7 @@ $(NAME):	$(OBJ)
 	@ranlib $(NAME)
 
 clean:
-	@rm -f $(OBJALL)
+	@rm -rf $(OBJ_DIR)
 
 fclean:	clean
 	@rm -f $(NAME)
@@ -70,3 +70,4 @@ fclean:	clean
 re:	fclean all
 
 .PHONY:	all clean fclean re
+

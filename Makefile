@@ -1,5 +1,6 @@
 SRC	=	main.c							\
 		free.c							\
+		get_prompt.c					\
 		signal.c						\
 		exec/exec.c						\
 		exec/exec_utils.c				\

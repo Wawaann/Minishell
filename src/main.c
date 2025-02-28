@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 11:42:34 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:13:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,31 @@ void	init_shell(t_shell *shell, char **env)
 	init_signals();
 }
 
+void	minishell(t_shell *shell, char **env)
+{
+	char	*prompt;
+
+	init_shell(shell, env);
+	while (1)
+	{
+		prompt = get_prompt(shell->env);
+		shell->input = readline(prompt);
+		if (!shell->input || ft_strncmp(shell->input, "exit", 4) == 0)
+			break ;
+		add_history(shell->input);
+		shell->tokens = tokenize(shell->input, &shell->num_cmds);
+		if (check_error(shell))
+		{
+			shell->cmds = get_commands(shell->tokens, shell->num_cmds);
+			init_path(shell);
+			init_pipes(shell);
+			execute_command(shell);
+		}
+		free_shell(shell);
+		free(prompt);
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_shell	shell;
@@ -54,23 +79,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 		return (0);
-	init_shell(&shell, env);
-	while (1)
-	{
-		shell.input = readline("$> ");
-		if (!shell.input || ft_strncmp(shell.input, "exit", 4) == 0)
-			break ;
-		add_history(shell.input);
-		shell.tokens = tokenize(shell.input, &shell.num_cmds);
-		if (check_error(&shell))
-		{
-			shell.cmds = get_commands(shell.tokens, shell.num_cmds);
-			init_path(&shell);
-			init_pipes(&shell);
-			execute_command(&shell);
-		}
-		free_shell(&shell);
-	}
+	minishell(&shell, env);
 	free_tokens(shell.env);
 	free_shell(&shell);
 	clear_history();
