@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 14:53:02 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:48:06 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	minishell(t_shell *shell, char **env)
 		if (check_error(shell))
 		{
 			shell->cmds = get_commands(shell->tokens, shell->num_cmds);
+			display_shell(shell);
 			init_path(shell);
 			init_pipes(shell);
 			execute_command(shell);
@@ -70,6 +71,8 @@ void	minishell(t_shell *shell, char **env)
 		free_shell(shell);
 		free(prompt);
 	}
+	if (prompt)
+		free(prompt);
 }
 
 int	main(int ac, char **av, char **env)

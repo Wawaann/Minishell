@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/27 12:17:56 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:05:52 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,33 @@ static bool	is_sep(char c)
 char	*extract_token(char *input, int *i)
 {
 	int		start;
-	char	quote;
+	int		quote;
 
 	start = *i;
 	quote = 0;
-	if (input[*i] == '\'' || input[*i] == '"')
+	if (input[*i + 1] && input[*i] == '"' && input[*i + 1] != '"')
 	{
-		quote = input[(*i)];
 		(*i)++;
-		while (input[*i] && input[*i] != quote)
+		while (input[*i] && input[*i] != '"')
 			(*i)++;
-		if (input[*i] == quote)
+		if (input[*i] == '"')
 			(*i)++;
 	}
 	else
-		while (input[*i] && !is_whitespace(input[*i]) && !is_sep(input[*i]))
+	{
+		while (input[*i])
+		{
+			if (input[*i] == '"' && quote == 0)
+				quote = 1;
+			else if (input[*i] == '"' && quote == 1)
+				quote = 0;
+			if (is_sep(input[*i]))
+				break ;
+			if (is_whitespace(input[*i]) && quote == 0)
+				break ;
 			(*i)++;
+		}
+	}
 	return (ft_substr(input, start, *i - start));
 }
 

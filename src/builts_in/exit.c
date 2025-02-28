@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:24 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 15:14:00 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:09:29 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ void	ft_exit(t_shell *shell, char **args)
 		shell->exit_status = 1;
 		return ;
 	}
-	if (ft_strdigit(args[1]) == 0)
+	if (args[1] && ft_strdigit(args[1]) == 0)
 	{
 		printf("minishell: exit: %s: numeric argument required\n", args[1]);
 		exit(2);
 	}
-	exit_status = ft_atoi(args[1]);
+	if (args[1])
+		exit_status = ft_atoi(args[1]);
 	if (exit_status < 0)
 		exit_status = 256 + exit_status;
 	else

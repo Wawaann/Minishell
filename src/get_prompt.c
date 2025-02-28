@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:31:58 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 14:32:47 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:47:41 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ void	extract_prompt(char **prompt, char **tab)
 char	*get_prompt(char **env)
 {
 	char	*prompt;
+	char	*var;
 	char	**tab;
 
-	tab = ft_split(get_env_var(env, "PWD"), "/");
+	var = get_env_var(env, "PWD");
+	tab = ft_split(var, "/");
 	prompt = ft_strdup("\033[0;36m\033[1m~/");
 	extract_prompt(&prompt, tab);
 	free_tokens(tab);
+	free(var);
 	return (prompt);
 }

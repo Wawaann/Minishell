@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 14:52:35 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:08:20 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,33 @@ void	init_cmd(t_command *cmd, char **tokens)
 	cmd->out = ft_calloc(cmd->out_count + 1, sizeof(t_redirs));
 }
 
+bool	is_var(char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+char	*get_args(char *token, char *cmd)
+{
+	char	*args;
+
+	if (cmd && ft_strncmp(cmd, "echo", 4) == 0)
+		args = ft_strtrim(token, "'");
+	else if (cmd && ft_strncmp(cmd, "export", 6) == 0)
+		args = ft_strtrim(token, "'");
+	else
+		args = ft_strtrim(token, "\"'");
+	return (args);
+}
+
 t_command	*get_commands(char **tokens, int cmd_nums)
 {
 	t_command	*cmds;
@@ -61,7 +88,7 @@ t_command	*get_commands(char **tokens, int cmd_nums)
 		else if (is_redirs(tokens[i]))
 			get_redirs(&cmds[j], tokens, &i);
 		else
-			cmds[j].args[k++] = ft_strdup(tokens[i]);
+			cmds[j].args[k++] = get_args(tokens[i], cmds[j].args[0]);
 		i++;
 	}
 	return (cmds);
