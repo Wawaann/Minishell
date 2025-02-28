@@ -1,0 +1,13 @@
+total 280$
+drwxr-xr-x 8 ebigotte 2024_nice    145 Feb 28 11:37 .$
+drwxr-xr-x 7 ebigotte 2024_nice     89 Feb 25 16:58 ..$
+-rw-r--r-- 1 ebigotte 2024_nice      0 Feb 28 11:37 file1$
+drwxr-xr-x 8 ebigotte 2024_nice    220 Feb 28 11:15 .git$
+-rw-r--r-- 1 ebigotte 2024_nice     30 Feb 25 16:02 .gitignore$
+drwxr-xr-x 2 ebigotte 2024_nice     18 Feb 28 10:56 include$
+drwxr-xr-x 4 ebigotte 2024_nice     63 Feb 28 11:37 lib$
+-rw-r--r-- 1 ebigotte 2024_nice   1640 Feb 28 10:56 Makefile$
+-rwxr-xr-x 1 ebigotte 2024_nice 276664 Feb 28 11:37 minishell$
+drwxr-xr-x 5 ebigotte 2024_nice     94 Feb 28 11:37 obj$
+drwxr-xr-x 5 ebigotte 2024_nice     94 Feb 28 10:56 src$
+drwxr-xr-x 2 ebigotte 2024_nice     27 Feb 27 13:57 .vscode$

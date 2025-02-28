@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 11:03:57 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:23:18 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int					count_cmd(char *input);
 int					is_redirs(char *token);
 bool				check_error(t_shell *shell);
 char				**tokenize(char *input, int *num_cmds);
+void				display_shell(t_shell *shell);
 void				get_number_redir(char **tokens, int *count, bool in);
 void				get_redirs(t_command *cmds, char **tokens, int *i);
 t_command			*get_commands(char **tokens, int cmd_nums);

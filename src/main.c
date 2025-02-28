@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 11:03:39 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:42:34 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,37 +46,6 @@ void	init_shell(t_shell *shell, char **env)
 	g_sig_pid = 0;
 	init_signals();
 }
-
-// void	display_shell(t_shell *shell)
-// {
-// 	printf("input: %s\n", shell->input);
-// 	printf("tokens: ");
-// 	for (int i = 0; shell->tokens[i]; i++)
-// 		printf("[%s] ", shell->tokens[i]);
-// 	printf("\n");
-// 	printf("num_cmds: %d\n", shell->num_cmds);
-// 	printf("cmds:\n");
-// 	for (int i = 0; i < shell->num_cmds; i++)
-// 	{
-// 		printf("cmd %d:\n", i);
-// 		printf("args: ");
-// 		for (int j = 0; shell->cmds[i].args[j]; j++)
-// 			printf("[%s] ", shell->cmds[i].args[j]);
-// 		printf("\n");
-// 		printf("in_count: %d\n", shell->cmds[i].in_count);
-// 		printf("in: ");
-// 		for (int j = 0; j < shell->cmds[i].in_count; j++)
-// 			printf("[%d: %s] ", shell->cmds[i].in[j].type,
-// 				shell->cmds[i].in[j].file);
-// 		printf("\n");
-// 		printf("out_count: %d\n", shell->cmds[i].out_count);
-// 		printf("out: ");
-// 		for (int j = 0; j < shell->cmds[i].out_count; j++)
-// 			printf("[%d: %s] ", shell->cmds[i].out[j].type,
-// 				shell->cmds[i].out[j].file);
-// 		printf("\n");
-// 	}
-// }
 
 int	main(int ac, char **av, char **env)
 {
