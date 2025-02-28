@@ -6,7 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/25 15:43:40 by ebigotte         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/27 13:49:56 by ebigotte         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 typedef struct s_redirs
 {
@@ -60,6 +65,9 @@ char				**tokenize(char *input, int *num_cmds);
 void				get_number_redir(char **tokens, int *count, bool in);
 void				get_redirs(t_command *cmds, char **tokens, int *i);
 t_command			*get_commands(char **tokens, int cmd_nums);
+
+// Signal
+void				init_signals(void);
 
 // Exec
 void	ft_error(char *str);

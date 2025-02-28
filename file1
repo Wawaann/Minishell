@@ -1,8 +1,0 @@
-total 220
--rw-r--r-- 1 ebigotte 2024_nice      0 Feb 25 16:12 file1
-drwxr-xr-x 2 ebigotte 2024_nice     18 Feb 25 16:02 include
-drwxr-xr-x 4 ebigotte 2024_nice     63 Feb 25 16:12 lib
--rw-r--r-- 1 ebigotte 2024_nice   1327 Feb 25 16:02 Makefile
--rwxr-xr-x 1 ebigotte 2024_nice 217192 Feb 25 16:12 minishell
-drwxr-xr-x 3 ebigotte 2024_nice     83 Feb 25 16:12 obj
-drwxr-xr-x 3 ebigotte 2024_nice     83 Feb 25 16:02 src

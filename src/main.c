@@ -6,7 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:47:56 by ebigotte          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/25 15:55:25 by ebigotte         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/27 14:03:16 by ebigotte         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +67,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->num_cmds = 0;
 	shell->env = env;
 	shell->exit_status = 0;
+	init_signals();
 }
 
 void	display_shell(t_shell *shell)
@@ -121,6 +126,11 @@ int	main(int ac, char **av, char **env)
 
 		free_shell(&shell);
 	}
+<<<<<<< Updated upstream
+=======
+	free_tokens(shell.env);
+	free_shell(&shell);
+>>>>>>> Stashed changes
 	clear_history();
 	return (0);
 }

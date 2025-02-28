@@ -1,7 +1,12 @@
 SRC	=	main.c							\
 		free.c							\
-		exec.c							\
-		exec_utils.c					\
+		signal.c						\
+		exec/exec.c						\
+		exec/exec_utils.c				\
+		exec/handle_heredoc.c			\
+		exec/handle_pipes.c				\
+		exec/handle_redir.c				\
+		parsing/error.c					\
 		parsing/get_command.c			\
 		parsing/get_redirs.c			\
 		parsing/tokenize.c				\
