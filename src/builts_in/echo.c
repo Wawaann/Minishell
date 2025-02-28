@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 13:56:58 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 12:02:03 by cedmarti         ###   ########.fr       */
+/*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
+/*   Updated: 2025/02/28 11:29:48 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-void	ft_cd(t_shell *shell, int index)
+void	ft_echo(t_shell *shell, char **args)
 {
-	char	*cwd;
-	char	*var;
-	char	*name;
+	int	i;
+	int	newline;
 
-	cwd = NULL;
-	var = NULL;
-	name = NULL;
-	if (chdir(shell->cmds[index].args[1]) != 0)
-		ft_putstr_fd("Error with cd\n", 2);
-	else
+	i = 1;
+	newline = 1;
+	if (args[i] && strcmp(args[i], "-n") == 0)
 	{
-		cwd = getcwd(NULL, 0);
-		name = ft_strdup("PWD=");
-		var = ft_strjoin(name, cwd);
-		ft_export(shell, var);
-		free(var);
-		free(name);
-		free(cwd);
+		newline = 0;
+		i++;
 	}
+	while (args[i])
+	{
+		if (ft_strcmp(args[i], "$?") == 0)
+		{
+			printf("%d", shell->exit_status);
+		}
+		else
+			printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (newline == 1)
+		printf("\n");
 }

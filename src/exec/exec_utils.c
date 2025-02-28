@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 12:15:42 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:28:42 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*get_path(t_shell *shell, char *cmd_name)
 	if (cmd_name && access(cmd_name, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd_name));
 	all_path = get_all_path(shell);
+	if (all_path == NULL)
+		return (NULL);
 	i = 0;
 	while (all_path[i])
 	{
