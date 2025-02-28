@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:24 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 16:09:29 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:16:23 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_exit(t_shell *shell, char **args)
 	int	exit_status;
 
 	exit_status = 0;
-	printf("exit\n");
 	if (ft_tablen(args) > 2)
 	{
 		printf("minishell: exit: too many arguments\n");

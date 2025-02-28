@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 17:14:39 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:15:31 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	call_execve(t_shell *shell, int index)
 		ft_putstr_fd("Command not found\n", 2);
 		exit(127);
 	}
+	if (handle_builtins(shell, index) == 1)
+		exit(shell->exit_status);
 	execve(shell->path[index], shell->cmds[index].args, shell->env);
 }
 
@@ -63,6 +65,11 @@ void	execute_simple_cmd(t_shell *shell)
 	int		status;
 
 	collect_all_heredocs(shell);
+	if (ft_strcmp(shell->cmds[0].args[0], "cd") == 0)
+	{
+		ft_cd(shell, 0);
+		return ;
+	}
 	g_sig_pid = fork();
 	if (g_sig_pid == -1)
 		ft_error("Error with fork");
@@ -71,6 +78,8 @@ void	execute_simple_cmd(t_shell *shell)
 		redirect_heredoc(shell, 0);
 		redirect_infiles(shell, 0);
 		redirect_outfiles(shell, 0);
+		if (handle_builtins(shell, 0) == 1)
+			exit(shell->exit_status);
 		if (shell->path[0] == NULL)
 			exit(127);
 		execve(shell->path[0], shell->cmds[0].args, shell->env);
@@ -87,37 +96,6 @@ void	execute_simple_cmd(t_shell *shell)
 
 void	execute_command(t_shell *shell)
 {
-	if (ft_strcmp(shell->cmds[0].args[0], "pwd") == 0)
-	{
-		ft_pwd();
-		return ;
-	}
-	if (ft_strcmp(shell->cmds[0].args[0], "cd") == 0)
-	{
-		ft_cd(shell, 0);
-		return ;
-	}
-	if (ft_strcmp(shell->cmds[0].args[0], "env") == 0)
-	{
-		printf("ma fonction env\n");
-		ft_env(shell);
-		return ;
-	}
-	if (ft_strcmp(shell->cmds[0].args[0], "export") == 0)
-	{
-		ft_export(shell, shell->cmds[0].args);
-		return ;
-	}
-	if (ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
-	{
-		ft_unset(shell, shell->cmds[0].args[1]);
-		return ;
-	}
-	if (ft_strcmp(shell->cmds[0].args[0], "echo") == 0)
-	{
-		ft_echo(shell, shell->cmds[0].args);
-		return ;
-	}
 	if (ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
 		ft_exit(shell, shell->cmds[0].args);
 	if (shell->num_cmds > 1)

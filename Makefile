@@ -19,6 +19,7 @@ SRC	=	main.c							\
 		builts_in/unset.c				\
 		builts_in/echo.c				\
 		builts_in/exit.c				\
+		builts_in/handle_builts_in.c	\
 
 SRC		:=	$(addprefix src/, $(SRC))
 

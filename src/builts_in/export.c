@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 16:51:30 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:22:59 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,7 @@ void	ft_export(t_shell *shell, char **args)
 	{
 		equal_pos = ft_strchr(args[i], '=');
 		if (equal_pos)
-		{
 			name = ft_strndup(args[i], equal_pos - args[i]);
-			printf("name = %s\n", name);
-		}
 		else
 			name = ft_strdup(args[i]);
 		if (!is_valid_varname(name))

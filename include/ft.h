@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 17:14:43 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:04:32 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void				ft_export(t_shell *shell, char **args);
 void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
 void				ft_exit(t_shell *shell, char **args);
+int					handle_builtins(t_shell *shell, int i);
 
 #endif
