@@ -6,13 +6,13 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 18:36:15 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:29:48 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-void	ft_echo(char **args)
+void	ft_echo(t_shell *shell, char **args)
 {
 	int	i;
 	int	newline;
@@ -26,7 +26,12 @@ void	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		if (ft_strcmp(args[i], "$?") == 0)
+		{
+			printf("%d", shell->exit_status);
+		}
+		else
+			printf("%s", args[i]);
 		if (args[i + 1])
 			printf(" ");
 		i++;

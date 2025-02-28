@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:56:58 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 11:24:20 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:02:03 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ void	ft_cd(t_shell *shell, int index)
 		free(var);
 		free(name);
 		free(cwd);
-		printf("c'est bon je t'ai bouger bobby!\n");
 	}
 }

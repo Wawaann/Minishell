@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:41:27 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 12:21:15 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:46:48 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,19 @@ void	redirect_pipes(t_shell *shell, int index)
 void	ft_wait_childs(t_shell *shell)
 {
 	int		i;
+	int		status;
+	int		final_status;
+	pid_t	pid;
 
 	i = 0;
 	while (i < shell->num_cmds)
 	{
-		wait(&shell->exit_status);
+		pid = wait(&status);
+		if (pid == shell->last_child)
+			final_status = status;
 		i++;
 	}
+	shell->exit_status = WEXITSTATUS(final_status);
 }
 
 void	ft_close_pipes(t_shell *shell)

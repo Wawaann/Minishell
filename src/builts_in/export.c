@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 11:13:32 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:21:57 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,22 @@ static char	**realloc_env(char **env, int size)
 	return (new_env);
 }
 
+int	is_valid_varname(const char *name)
+{
+	int i;
+
+	if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
+		return (0);
+	i = 1;
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 
 void	ft_export(t_shell *shell, char *var)
 {
@@ -60,17 +76,30 @@ void	ft_export(t_shell *shell, char *var)
 	char	*equal_pos;
 
 	equal_pos = ft_strchr(var, '=');
-	if (!var || !equal_pos)
+	if (equal_pos)
+		name = ft_strndup(var, equal_pos - var);
+	else
+		name = ft_strdup(var);
+
+	if (!is_valid_varname(name))
+	{
+		ft_putstr_fd("export: not a valid identifier\n", 2);
+		free(name);
+		shell->exit_status = 1;
 		return ;
-	name = ft_strndup(var, equal_pos - var);
+	}
 	i = 0;
 	while (shell->env[i])
 	{
-		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0
-			&& shell->env[i][strlen(name)] == '=')
+		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0 &&
+			(shell->env[i][ft_strlen(name)] == '='
+			|| shell->env[i][ft_strlen(name)] == '\0'))
 		{
-			free(shell->env[i]);
-			shell->env[i] = ft_strdup(var);
+			if (equal_pos)
+			{
+				free(shell->env[i]);
+				shell->env[i] = ft_strdup(var);
+			}
 			free(name);
 			return ;
 		}
@@ -80,4 +109,5 @@ void	ft_export(t_shell *shell, char *var)
 	shell->env[i] = ft_strdup(var);
 	shell->env[i + 1] = NULL;
 	free(name);
+	shell->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 18:33:47 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:33:41 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	execute_pipe(t_shell *shell)
 			call_execve(shell, i);
 			exit(127);
 		}
+		if (i == shell->num_cmds - 1)
+			shell->last_child = pid;
 		i++;
 	}
 	ft_close_pipes(shell);
@@ -60,6 +62,7 @@ void	execute_pipe(t_shell *shell)
 void	execute_simple_cmd(t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
 	collect_all_heredocs(shell);
 	pid = fork();
@@ -70,11 +73,17 @@ void	execute_simple_cmd(t_shell *shell)
 		redirect_heredoc(shell, 0);
 		redirect_infiles(shell, 0);
 		redirect_outfiles(shell, 0);
+		if (shell->path[0] == NULL)
+			exit(127);
 		execve(shell->path[0], shell->cmds[0].args, shell->env);
 		exit(127);
 	}
 	else
-		wait(&shell->exit_status);
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			shell->exit_status = WEXITSTATUS(status);
+	}
 	cleanup_heredocs(shell);
 }
 
@@ -106,9 +115,9 @@ void	execute_command(t_shell *shell)
 		ft_unset(shell, shell->cmds[0].args[1]);
 		return ;
 	}
-	if (ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
+	if (ft_strcmp(shell->cmds[0].args[0], "echo") == 0)
 	{
-		ft_echo(shell->cmds[0].args);
+		ft_echo(shell, shell->cmds[0].args);
 		return ;
 	}
 	if (ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
