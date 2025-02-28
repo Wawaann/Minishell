@@ -6,54 +6,13 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 10:57:01 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:03:39 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-// void	creation_cmds_dur(t_shell *shell)
-// {
-// 	// Allouer un tableau de 3 commandes + 1 NULL pour marquer la fin
-// 	shell->num_cmds = 3;
-// 	shell->cmds = malloc(sizeof(t_command) * (shell->num_cmds));
-
-// 	// Commande 1: `ls -l`
-// 	shell->cmds[0].args = malloc(sizeof(char *) * 3);
-// 	shell->cmds[0].args[0] = ft_strdup("cat");
-// 	shell->cmds[0].args[1] = ft_strdup("-e");
-// 	shell->cmds[0].args[2] = NULL;
-// 	shell->cmds[0].in = NULL;
-// 	// shell->cmds[0].in = malloc(sizeof(t_redirection));
-// 	// shell->cmds[0].in->file = ft_strdup("infile.txt");
-// 	// shell->cmds[0].in->type = 1;
-// 	shell->cmds[0].out = NULL;
-// 	// shell->cmds[0].out = malloc(sizeof(t_redirection));
-// 	// shell->cmds[0].out->file = ft_strdup("outfile.txt");
-// 	// shell->cmds[0].out->type = 4;
-
-// 	// Commande 2: `grep e`
-// 	shell->cmds[1].args = malloc(sizeof(char *) * 3);
-// 	shell->cmds[1].args[0] = ft_strdup("grep");
-// 	shell->cmds[1].args[1] = ft_strdup("e");
-// 	shell->cmds[1].args[2] = NULL;
-// 	shell->cmds[1].in = NULL;
-// 	//shell->cmds[1].out = NULL;
-// 	shell->cmds[1].out = malloc(sizeof(t_redirection));
-// 	shell->cmds[1].out->file = ft_strdup("outfile.txt");
-// 	shell->cmds[1].out->type = 3;
-
-// 	// Commande 3: `wc -l`
-// 	shell->cmds[2].args = malloc(sizeof(char *) * 3);
-// 	shell->cmds[2].args[0] = ft_strdup("wc");
-// 	shell->cmds[2].args[1] = ft_strdup("-w");
-// 	shell->cmds[2].args[2] = NULL;
-// 	shell->cmds[2].in = NULL;
-// 	shell->cmds[2].out = NULL;
-// 	// shell->cmds[2].out = malloc(sizeof(t_redirection));
-// 	// shell->cmds[2].out->file = ft_strdup("outfile.txt");
-// 	// shell->cmds[2].out->type = 3;
-// }
+pid_t	g_sig_pid;
 
 void	duplicate_env(t_shell *shell, char **env)
 {
@@ -84,6 +43,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->num_cmds = 0;
 	duplicate_env(shell, env);
 	shell->exit_status = 0;
+	g_sig_pid = 0;
 	init_signals();
 }
 

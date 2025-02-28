@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:00:37 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 10:56:25 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:05:53 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void	free_shell(t_shell *shell)
 	shell->tokens = NULL;
 	shell->path = NULL;
 	shell->pipes = NULL;
+	g_sig_pid = 0;
 }

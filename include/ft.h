@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 10:57:40 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:03:57 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+extern pid_t	g_sig_pid;
 
 typedef struct s_redirs
 {

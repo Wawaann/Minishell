@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/26 17:54:17 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:04:47 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,15 @@ void	call_execve(t_shell *shell, int index)
 void	execute_pipe(t_shell *shell)
 {
 	int		i;
-	pid_t	pid;
 
 	collect_all_heredocs(shell);
 	i = 0;
 	while (i < shell->num_cmds)
 	{
-		pid = fork();
-		if (pid == -1)
+		g_sig_pid = fork();
+		if (g_sig_pid == -1)
 			ft_error("Error with fork");
-		if (pid == 0)
+		if (g_sig_pid == 0)
 		{
 			call_execve(shell, i);
 			exit(127);
@@ -59,13 +58,11 @@ void	execute_pipe(t_shell *shell)
 
 void	execute_simple_cmd(t_shell *shell)
 {
-	pid_t	pid;
-
 	collect_all_heredocs(shell);
-	pid = fork();
-	if (pid == -1)
+	g_sig_pid = fork();
+	if (g_sig_pid == -1)
 		ft_error("Error with fork");
-	if (pid == 0)
+	if (g_sig_pid == 0)
 	{
 		redirect_heredoc(shell, 0);
 		redirect_infiles(shell, 0);
