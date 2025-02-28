@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 14:55:23 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:14:43 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void				init_path(t_shell *shell);
 void				ft_pwd(void);
 void				ft_cd(t_shell *shell, int index);
 void				ft_env(t_shell *shell);
-void				ft_export(t_shell *shell, char *var);
+void				ft_export(t_shell *shell, char **args);
 void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
 void				ft_exit(t_shell *shell, char **args);
