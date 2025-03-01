@@ -6,29 +6,41 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 17:05:52 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:00:29 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-bool	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t');
-}
 
 static bool	is_sep(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }
 
+void	get_quote(char *input, int *i)
+{
+	int	quote;
+
+	quote = 0;
+	while (input[*i])
+	{
+		if ((input[*i] == '"' || input[*i] == '\'') && quote == 0)
+			quote = 1;
+		else if ((input[*i] == '"' || input[*i] == '\'') && quote == 1)
+			quote = 0;
+		if (is_sep(input[*i]))
+			break ;
+		if (is_whitespace(input[*i]) && quote == 0)
+			break ;
+		(*i)++;
+	}
+}
+
 char	*extract_token(char *input, int *i)
 {
 	int		start;
-	int		quote;
 
 	start = *i;
-	quote = 0;
 	if (input[*i + 1] && input[*i] == '"' && input[*i + 1] != '"')
 	{
 		(*i)++;
@@ -39,18 +51,7 @@ char	*extract_token(char *input, int *i)
 	}
 	else
 	{
-		while (input[*i])
-		{
-			if (input[*i] == '"' && quote == 0)
-				quote = 1;
-			else if (input[*i] == '"' && quote == 1)
-				quote = 0;
-			if (is_sep(input[*i]))
-				break ;
-			if (is_whitespace(input[*i]) && quote == 0)
-				break ;
-			(*i)++;
-		}
+		get_quote(input, i);
 	}
 	return (ft_substr(input, start, *i - start));
 }

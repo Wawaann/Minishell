@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 20:04:43 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:56:36 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void				free_shell(t_shell *shell);
 int					count_cmd(char *input);
 int					is_redirs(char *token);
 bool				check_error(t_shell *shell);
+bool				is_whitespace(char c);
 char				**tokenize(char *input, int *num_cmds);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);

@@ -6,11 +6,16 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 12:32:13 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:56:20 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
+
+bool	is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t');
+}
 
 int	count_cmd(char *input)
 {
