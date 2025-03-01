@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 17:14:33 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:29:36 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ int	main(int ac, char **av, char **env)
 	minishell(&shell, env);
 	free_tokens(shell.env);
 	free_shell(&shell);
-	clear_history();
+	rl_clear_history();
 	return (0);
 }

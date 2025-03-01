@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 17:14:43 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:04:43 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../lib/include/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <editline/readline.h>
 # include <sys/wait.h>
 # include <signal.h>
 
