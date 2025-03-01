@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 17:08:20 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:16:40 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,14 @@ char	*get_args(char *token, char *cmd)
 	char	*args;
 
 	if (cmd && ft_strncmp(cmd, "echo", 4) == 0)
-		args = ft_strtrim(token, "'");
+	{
+		if (is_var(token))
+			args = ft_strtrim(token, "\"");
+		else
+			args = ft_strtrim(token, "\"'");
+	}
 	else if (cmd && ft_strncmp(cmd, "export", 6) == 0)
-		args = ft_strtrim(token, "'");
+		args = ft_strdup(token);
 	else
 		args = ft_strtrim(token, "\"'");
 	return (args);

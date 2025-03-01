@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 18:04:32 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:21:11 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../lib/include/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <editline/readline.h>
 # include <sys/wait.h>
 # include <signal.h>
 
@@ -59,6 +60,7 @@ void				free_shell(t_shell *shell);
 int					count_cmd(char *input);
 int					is_redirs(char *token);
 bool				check_error(t_shell *shell);
+bool				is_whitespace(char c);
 char				**tokenize(char *input, int *num_cmds);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);

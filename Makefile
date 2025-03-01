@@ -26,9 +26,13 @@ SRC		:=	$(addprefix src/, $(SRC))
 OBJ_DIR	=	obj/
 OBJ		=	$(patsubst src/%.c,$(OBJ_DIR)%.o,$(SRC))
 
-INCLUDE	=	-I./include/
-
-LIB		=	-L./lib -lft -lreadline
+ifeq ($(shell uname), Darwin)
+	INCLUDE	=	-I./include/ -I/opt/homebrew/opt/readline/include/
+	LIB		=	-L./lib -lft -L/opt/homebrew/opt/readline/lib/ -lreadline
+else
+	INCLUDE	=	-I./include/
+	LIB		=	-L./lib -lft -lreadline
+endif
 
 FLAG	=	-Wall -Wextra -Werror -g3
 
