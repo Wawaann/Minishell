@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 12:34:31 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:03:55 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_simple_cmd(t_shell *shell)
 
 	collect_all_heredocs(shell);
 	if (handle_builtin(shell, 0, 0))
-		return;
+		return ;
 	g_sig_pid = fork();
 	if (g_sig_pid == -1)
 		ft_error("Error with fork");

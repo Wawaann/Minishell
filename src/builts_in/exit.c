@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:24 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 14:31:50 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:01:36 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_exit(t_shell *shell, char **args)
 		ft_putstr_fd("exit: too many arguments\n", 2);
 		shell->exit_status = 1;
 		return ;
-
 	}
 	if (args[1] && ft_strdigit(args[1]) == 0)
 	{

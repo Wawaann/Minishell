@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 12:15:13 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:02:13 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	**realloc_env(char **env, int size)
 
 int	is_valid_varname(const char *name)
 {
-	int i;
+	int	i;
 
 	if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
 		return (0);
@@ -88,8 +88,8 @@ void	add_update_env(t_shell *shell, char *var, char *name, char *has_value)
 	i = 0;
 	while (shell->env[i])
 	{
-		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0 &&
-			(shell->env[i][ft_strlen(name)] == '='
+		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0
+			&& (shell->env[i][ft_strlen(name)] == '='
 			|| shell->env[i][ft_strlen(name)] == '\0'))
 		{
 			if (has_value)

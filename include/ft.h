@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 12:34:00 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:00:22 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int					count_cmd(char *input);
 int					is_redirs(char *token);
 bool				check_error(t_shell *shell);
 bool				is_whitespace(char c);
+bool				is_var(char *arg);
 char				**tokenize(char *input, int *num_cmds);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);

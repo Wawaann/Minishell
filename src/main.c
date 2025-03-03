@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 11:07:22 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:00:14 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ void	init_shell(t_shell *shell, char **env)
 	init_signals();
 }
 
+void	exec(t_shell *shell)
+{
+	shell->cmds = get_commands(shell->tokens, shell->num_cmds);
+	init_path(shell);
+	init_pipes(shell);
+	execute_command(shell);
+}
+
 void	minishell(t_shell *shell, char **env)
 {
 	char	*prompt;
@@ -58,15 +66,12 @@ void	minishell(t_shell *shell, char **env)
 		shell->input = readline(prompt);
 		if (!shell->input)
 			break ;
-		add_history(shell->input);
-		shell->tokens = tokenize(shell->input, &shell->num_cmds);
-		if (check_error(shell))
+		if (shell->input[0] != '\0')
 		{
-			shell->cmds = get_commands(shell->tokens, shell->num_cmds);
-			//display_shell(shell);
-			init_path(shell);
-			init_pipes(shell);
-			execute_command(shell);
+			add_history(shell->input);
+			shell->tokens = tokenize(shell->input, &shell->num_cmds);
+			if (check_error(shell))
+				exec(shell);
 		}
 		free_shell(shell);
 		free(prompt);
