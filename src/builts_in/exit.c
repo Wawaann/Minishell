@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:24 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 18:16:23 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:31:50 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ void	ft_exit(t_shell *shell, char **args)
 	exit_status = 0;
 	if (ft_tablen(args) > 2)
 	{
-		printf("minishell: exit: too many arguments\n");
+		ft_putstr_fd("exit: too many arguments\n", 2);
 		shell->exit_status = 1;
 		return ;
+
 	}
 	if (args[1] && ft_strdigit(args[1]) == 0)
 	{
-		printf("minishell: exit: %s: numeric argument required\n", args[1]);
+		ft_putstr_fd("exit: numeric argument required\n", 2);
 		exit(2);
 	}
 	if (args[1])

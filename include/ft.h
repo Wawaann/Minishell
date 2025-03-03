@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/01 17:21:11 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:34:00 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../lib/include/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <editline/readline.h>
 # include <sys/wait.h>
 # include <signal.h>
 
@@ -102,9 +101,10 @@ void				ft_pwd(void);
 void				ft_cd(t_shell *shell, int index);
 void				ft_env(t_shell *shell);
 void				ft_export(t_shell *shell, char **args);
+void				print_export(t_shell *shell);
 void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
 void				ft_exit(t_shell *shell, char **args);
-int					handle_builtins(t_shell *shell, int i);
+int					handle_builtin(t_shell *shell, int i, int is_child);
 
 #endif
