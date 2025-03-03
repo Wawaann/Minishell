@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 15:00:22 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:03:38 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void				redirect_infiles(t_shell *shell, int index);
 char				**get_all_path(t_shell *shell);
 char				*get_path(t_shell *shell, char *cmd_name);
 void				init_path(t_shell *shell);
+void				redirect_simple_cmd(t_shell *shell);
 
 // Builtin
 void				ft_pwd(void);
@@ -107,5 +108,12 @@ void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
 void				ft_exit(t_shell *shell, char **args);
 int					handle_builtin(t_shell *shell, int i, int is_child);
+
+// Export Utils
+char				*ft_strndup(const char *s, int n);
+char				**realloc_env(char **env, int size);
+int					is_valid_varname(const char *name);
+void				print_export(t_shell *shell);
+void				handle_invalid_identifier(t_shell *shell, char *arg);
 
 #endif

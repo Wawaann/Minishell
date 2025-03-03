@@ -16,6 +16,7 @@ SRC	=	main.c							\
 		builts_in/cd.c					\
 		builts_in/env.c					\
 		builts_in/export.c				\
+		builts_in/export_utils.c		\
 		builts_in/unset.c				\
 		builts_in/echo.c				\
 		builts_in/exit.c				\
