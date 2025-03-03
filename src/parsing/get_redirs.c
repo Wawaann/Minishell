@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 15:02:53 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/25 15:54:50 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:37:45 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_in_redir(t_command *cmd, char **tokens, int i)
 	if (!cmd->in[0].file)
 		in = 0;
 	cmd->in[in].type = is_redirs(tokens[i]);
-	cmd->in[in].file = ft_strdup(tokens[i + 1]);
+	cmd->in[in].file = ft_strtrim(tokens[i + 1], "\"'");
 	in++;
 }
 
@@ -67,7 +67,7 @@ void	get_out_redir(t_command *cmd, char **tokens, int i)
 	if (!cmd->out[0].file)
 		out = 0;
 	cmd->out[out].type = is_redirs(tokens[i]);
-	cmd->out[out].file = ft_strdup(tokens[i + 1]);
+	cmd->out[out].file = ft_strtrim(tokens[i + 1], "\"'");
 	out++;
 }
 

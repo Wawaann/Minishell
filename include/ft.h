@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 15:00:22 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:22:57 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
 void				ft_exit(t_shell *shell, char **args);
 int					handle_builtin(t_shell *shell, int i, int is_child);
+
+char	*ft_strndup(const char *s, int n);
 
 #endif

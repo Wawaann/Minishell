@@ -6,104 +6,82 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 14:56:11 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:26:27 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-int	print_spe(char *arg, int *i, t_shell *shell)
+void print_env_var(t_shell *shell, const char *var)
 {
-	if (arg[*i + 1] == '?')
-	{
-		printf("%d", shell->exit_status);
-		(*i)++;
-		return (1);
-	}
-	else if (arg[*i + 1] == '$')
-	{
-		printf("%d", g_sig_pid);
-		(*i)++;
-		return (1);
-	}
-	else if (arg[*i + 1] == ' ')
+    char *value;
+
+	if (var[0] == '\0' || var[0] == ' ')
 	{
 		printf("$");
-		(*i)++;
-		return (1);
-	}
-	return (0);
-}
-
-void	print_var(char *arg, int *i, t_shell *shell)
-{
-	char	*var;
-
-	if (print_spe(arg, i, shell) == 1)
 		return ;
-	var = get_env_var(shell->env, arg + *i + 1);
-	if (var)
-	{
-		printf("%s", var);
-		(*i) += ft_strlen(var) + 1;
-		free(var);
 	}
-	else
-		(*i) += ft_strlen_to(arg + *i + 1, ' ');
+	if (var[0] == '?')
+	{
+		printf("%d", shell->exit_status);
+		if (var[1] != '\0')
+			printf("%s", &var[1]);
+		return ;
+	}
+	value = getenv(var);
+    if (value)
+        printf("%s", value);
 }
 
-void	display_var(t_shell *shell, char *arg)
+void print_argument(t_shell *shell, const char *arg)
 {
-	int		i;
+    int i = 0;
+	int start;
+    bool in_double_quote = false;
+    bool in_single_quote = false;
 
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '$')
-		{
-			print_var(arg, &i, shell);
-		}
-		else
-		{
-			printf("%c", arg[i]);
-		}
-		i++;
-	}
+    while (arg[i])
+    {
+        if (arg[i] == '"' && !in_single_quote)
+            in_double_quote = !in_double_quote;
+        else if (arg[i] == '\'' && !in_double_quote)
+            in_single_quote = !in_single_quote;
+        else if (arg[i] == '$' && !in_single_quote) // Gestion de $VAR
+        {
+            start = ++i;
+            while (arg[i] && (arg[i] != ' ' && arg[i] != '"' && arg[i] != '\''))
+                i++;
+            char *var = ft_strndup(&arg[start], i - start);
+            print_env_var(shell, var);
+            free(var);
+            i--;
+        }
+        else
+            printf("%c", arg[i]);
+        i++;
+    }
 }
 
-void	display_echo(t_shell *shell, char **args, int start)
+void ft_echo(t_shell *shell, char **args)
 {
-	int		i;
-	char	*tmp;
+    bool	newline;
+    int		i;
 
-	i = start;
-	while (args[i])
-	{
-		if (is_var(args[i]) && args[i][0] != '\'')
-		{
-			display_var(shell, args[i]);
-		}
-		else
-		{
-			tmp = ft_strtrim(args[i], "'");
-			printf("%s", tmp);
-			free(tmp);
-		}
-		if (args[i + 1])
-			printf(" ");
-		i++;
-	}
+	i = 1;
+	newline = true;
+    if (args[i] && strcmp(args[i], "-n") == 0)
+    {
+        newline = false;
+        i++;
+    }
+    while (args[i])
+    {
+        print_argument(shell, args[i]);
+        if (args[i + 1])
+            printf(" ");
+        i++;
+    }
+    if (newline)
+        printf("\n");
 }
 
-void	ft_echo(t_shell *shell, char **args)
-{
-	if (args[1] && strcmp(args[1], "-n") == 0)
-	{
-		display_echo(shell, args, 2);
-	}
-	else
-	{
-		display_echo(shell, args, 1);
-		printf("\n");
-	}
-}

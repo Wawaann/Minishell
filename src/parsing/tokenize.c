@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/01 16:00:29 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:58:11 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ static bool	is_sep(char c)
 
 void	get_quote(char *input, int *i)
 {
-	int	quote;
+	int	simple;
+	int	qdouble;
 
-	quote = 0;
+	simple = 0;
+	qdouble = 0;
 	while (input[*i])
 	{
-		if ((input[*i] == '"' || input[*i] == '\'') && quote == 0)
-			quote = 1;
-		else if ((input[*i] == '"' || input[*i] == '\'') && quote == 1)
-			quote = 0;
-		if (is_sep(input[*i]))
-			break ;
-		if (is_whitespace(input[*i]) && quote == 0)
+		if (input[*i] == '\'' && !qdouble)
+			simple = !simple;
+		if (input[*i] == '"' && !simple)
+			qdouble = !qdouble;
+		if (input[*i] == ' ' && !simple && !qdouble)
 			break ;
 		(*i)++;
 	}

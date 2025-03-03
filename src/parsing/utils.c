@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 10:37:47 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:28:30 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ int	count_cmd(char *input)
 {
 	int	i;
 	int	count;
+	int	quote;
 
 	i = 0;
 	count = 0;
+	quote = 0;
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (input[i] == '\'' || input[i] == '"')
+			quote = !quote;
+		if (input[i] == '|' && !quote)
 			count++;
 		i++;
 	}
@@ -57,6 +61,7 @@ void	display_cmds(t_shell *shell)
 	while (i < shell->num_cmds)
 	{
 		printf("\tCommand %d: {\n", i);
+		printf("\t\tNumber of Args: %d\n", (int)ft_tablen(shell->cmds[i].args));
 		printf("\t\tArgs: ");
 		j = 0;
 		while (shell->cmds[i].args[j])

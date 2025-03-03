@@ -6,13 +6,13 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 15:02:13 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:22:48 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-static char	*ft_strndup(const char *s, int n)
+char	*ft_strndup(const char *s, int n)
 {
 	int		i;
 	char	*dup;
