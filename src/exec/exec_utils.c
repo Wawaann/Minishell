@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 15:03:15 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:49:50 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,11 @@ void	init_path(t_shell *shell)
 		shell->path[i] = get_path(shell, shell->cmds[i].args[0]);
 		i++;
 	}
+}
+
+void	redirect_simple_cmd(t_shell *shell)
+{
+	redirect_heredoc(shell, 0);
+	redirect_infiles(shell, 0);
+	redirect_outfiles(shell, 0);
 }

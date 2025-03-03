@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 15:03:55 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:49:43 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ void	execute_simple_cmd(t_shell *shell)
 		ft_error("Error with fork");
 	if (g_sig_pid == 0)
 	{
-		redirect_heredoc(shell, 0);
-		redirect_infiles(shell, 0);
-		redirect_outfiles(shell, 0);
+		redirect_simple_cmd(shell);
 		if (handle_builtin(shell, 0, 1))
 			exit(shell->exit_status);
 		if (shell->path[0] == NULL)
