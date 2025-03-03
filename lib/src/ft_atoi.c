@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:14:16 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/08 14:43:58 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:58:02 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	ft_atoi(const char *str)
 			s = -1;
 		i++;
 	}
+	if (str[i] == '\'' || str[i] == '\"')
+		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		nb *= 10;
@@ -44,12 +46,3 @@ int	ft_atoi(const char *str)
 	}
 	return (nb * s);
 }
-/*
-int main()
-{
-	char *str = " \n2147483647";
-
-	printf("  atoi : %d\n", atoi(str));
-	printf("ft_atoi: %d\n", ft_atoi(str));
-	return (0);
-}*/

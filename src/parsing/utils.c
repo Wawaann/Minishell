@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/01 15:56:20 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:37:47 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	display_shell(t_shell *shell)
 	printf("Number of commands: %d\n", shell->num_cmds);
 	printf("Commands: {\n");
 	display_cmds(shell);
-	printf("}\n\n");
+	printf("}\n--------------------\n");
 }

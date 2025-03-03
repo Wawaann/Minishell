@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/01 15:56:36 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:52:51 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../lib/include/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <editline/readline.h>
+// # include <editline/readline.h>
 # include <sys/wait.h>
 # include <signal.h>
 
@@ -61,6 +61,7 @@ int					count_cmd(char *input);
 int					is_redirs(char *token);
 bool				check_error(t_shell *shell);
 bool				is_whitespace(char c);
+bool				is_var(char *arg);
 char				**tokenize(char *input, int *num_cmds);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);
