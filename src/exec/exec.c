@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 16:49:43 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/03 19:08:37 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ void	call_execve(t_shell *shell, int index)
 	if (handle_builtin(shell, index, 1))
 		exit(shell->exit_status);
 	if (shell->path[index] == NULL)
-	{
-		free_shell(shell);
-		ft_putstr_fd("Command not found\n", 2);
 		exit(127);
-	}
 	execve(shell->path[index], shell->cmds[index].args, shell->env);
 }
 
@@ -76,7 +72,10 @@ void	execute_simple_cmd(t_shell *shell)
 		if (handle_builtin(shell, 0, 1))
 			exit(shell->exit_status);
 		if (shell->path[0] == NULL)
+		{
+			ft_putstr_fd(" command not found\n", 2);
 			exit(127);
+		}
 		execve(shell->path[0], shell->cmds[0].args, shell->env);
 		exit(127);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 17:39:17 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:44:10 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_shell(t_shell *shell, char **env)
 void	exec(t_shell *shell)
 {
 	shell->cmds = get_commands(shell->tokens, shell->num_cmds);
-	//display_shell(shell);
+	// display_shell(shell);
 	init_path(shell);
 	init_pipes(shell);
 	execute_command(shell);
