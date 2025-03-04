@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 15:35:43 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:36:53 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ typedef struct s_redirs
 typedef struct s_command
 {
 	char			**args;
-	int				in_count;
-	int				out_count;
+	int				count;
+	int				in;
+	int				out;
 	int				*echo;
-	t_redirs		*in;
-	t_redirs		*out;
+	t_redirs		*redirs;
 }					t_command;
 
 typedef struct s_token
@@ -67,6 +67,7 @@ void				free_shell(t_shell *shell);
 // Parsing
 int					count_cmd(char *input);
 int					is_redirs(char *token);
+int					get_number_redir(t_token *tokens, bool in);
 bool				check_error(t_shell *shell);
 bool				is_whitespace(char c);
 bool				is_var(char *arg);
@@ -74,13 +75,15 @@ char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);
 char				*concat_tokens(char *token, char *sub_token);
 void				display_shell(t_shell *shell);
-void				get_number_redir(t_token *tokens, int *count, bool in);
 void				get_redirs(t_command *cmds, t_token *tokens, int *i);
 t_token				*tokenize(char *input, int *cmd__nums);
 t_command			*get_commands(t_token *tokens, int cmd_nums);
 
 // Signal
 void				init_signals(void);
+
+
+void	redirect(t_shell *shell, int index);
 
 // Exec
 void				ft_error(char *str);
@@ -99,8 +102,8 @@ void				ft_wait_childs(t_shell *shell);
 void				ft_close_pipes(t_shell *shell);
 
 // Handle_redir
-void				redirect_outfiles(t_shell *shell, int index);
-void				redirect_infiles(t_shell *shell, int index);
+// void				redirect_outfiles(t_shell *shell, int index);
+// void				redirect_infiles(t_shell *shell, int index);
 
 // Exec Utils
 char				**get_all_path(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 15:02:53 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 15:29:14 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:36:46 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_redirs(char *token)
 	return (0);
 }
 
-void	get_number_redir(t_token *tokens, int *count, bool in)
+int	get_number_redir(t_token *tokens, bool in)
 {
 	int	i;
 	int	redir;
@@ -48,38 +48,22 @@ void	get_number_redir(t_token *tokens, int *count, bool in)
 		}
 		i++;
 	}
-	(*count) = redir;
+	return (redir);
 }
 
-void	get_in_redir(t_command *cmd, t_token *tokens, int i)
+void	get_redir(t_command *cmd, t_token *token, int i)
 {
-	static int	in = 0;
+	static int	redir = 0;
 
-	if (!cmd->in[0].file)
-		in = 0;
-	cmd->in[in].type = is_redirs(tokens[i].token);
-	cmd->in[in].file = ft_strtrim(tokens[i + 1].token, "\"'");
-	in++;
-}
-
-void	get_out_redir(t_command *cmd, t_token *tokens, int i)
-{
-	static int	out = 0;
-
-	if (!cmd->out[0].file)
-		out = 0;
-	cmd->out[out].type = is_redirs(tokens[i].token);
-	cmd->out[out].file = ft_strtrim(tokens[i + 1].token, "\"'");
-	out++;
+	if (!cmd->redirs[0].file)
+		redir = 0;
+	cmd->redirs[redir].type = is_redirs(token[i].token);
+	cmd->redirs[redir].file = ft_strtrim(token[i + 1].token, "\"'");
+	redir++;
 }
 
 void	get_redirs(t_command *cmds, t_token *tokens, int *i)
 {
-	if (ft_strcmp(tokens[*i].token, "<") == 0
-		|| ft_strcmp(tokens[*i].token, "<<") == 0)
-		get_in_redir(cmds, tokens, *i);
-	if (ft_strcmp(tokens[*i].token, ">") == 0
-		|| ft_strcmp(tokens[*i].token, ">>") == 0)
-		get_out_redir(cmds, tokens, *i);
+	get_redir(cmds, tokens, *i);
 	(*i)++;
 }

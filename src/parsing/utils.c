@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 15:31:01 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:38:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,10 @@ void	display_cmds(t_shell *shell)
 			j++;
 		}
 		printf("\n");
-		printf("\t\tNumber of In redirs: %d\n", shell->cmds[i].in_count);
-		printf("\t\tIn redirs: ");
-		display_redirs(shell->cmds[i].in, shell->cmds[i].in_count);
-		printf("\t\tNumber of Out redirs: %d\n", shell->cmds[i].out_count);
-		printf("\t\tOut redirs: ");
-		display_redirs(shell->cmds[i].out, shell->cmds[i].out_count);
+		printf("\t\tNumber of redir In: %d, Out: %d, All: %d\n",
+			shell->cmds[i].in, shell->cmds[i].out, shell->cmds[i].count);
+		printf("\t\tAll redirs: ");
+		display_redirs(shell->cmds[i].redirs, shell->cmds[i].count);
 		printf("\t}\n");
 		i++;
 	}

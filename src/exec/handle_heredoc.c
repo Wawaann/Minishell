@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:45:09 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/26 12:04:04 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:58:24 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ void	collect_all_heredocs(t_shell *shell)
 	i = -1;
 	while (++i < shell->num_cmds)
 	{
-		if (shell->cmds[i].in_count > 0)
+		if (shell->cmds[i].count > 0)
 		{
 			j = -1;
-			while (++j < shell->cmds[i].in_count)
+			while (++j < shell->cmds[i].count)
 			{
-				if (shell->cmds[i].in[j].type == 2)
+				if (shell->cmds[i].redirs[j].type == 2)
 				{
 					nb_heredoc = ft_itoa(j);
 					name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
 					free(nb_heredoc);
-					read_hd(shell, shell->cmds[i].in[j].file, name);
+					read_hd(shell, shell->cmds[i].redirs[j].file, name);
 					free(name);
 				}
 			}
@@ -73,10 +73,10 @@ void	redirect_heredoc(t_shell *shell, int index)
 	char	*nb_heredoc;
 	char	*name;
 
-	if (shell->cmds[index].in_count > 0)
+	if (shell->cmds[index].count > 0)
 	{
-		i = shell->cmds[index].in_count - 1;
-		if (shell->cmds[index].in[i].type == 2)
+		i = shell->cmds[index].count - 1;
+		if (shell->cmds[index].redirs[i].type == 2)
 		{
 			nb_heredoc = ft_itoa(i);
 			name = ft_strjoin(".heredoc_tmp_", nb_heredoc);
@@ -98,7 +98,7 @@ void	cleanup_heredocs(t_shell *shell)
 	char	*name;
 
 	i = 0;
-	while (i < shell->cmds[0].in_count)
+	while (i < shell->cmds[0].count)
 	{
 		nb_heredoc = ft_itoa(i);
 		name = ft_strjoin(".heredoc_tmp_", nb_heredoc);

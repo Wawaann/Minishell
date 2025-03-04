@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 15:11:20 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:10:24 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void	init_path(t_shell *shell)
 void	redirect_simple_cmd(t_shell *shell)
 {
 	redirect_heredoc(shell, 0);
-	redirect_infiles(shell, 0);
-	redirect_outfiles(shell, 0);
+	redirect(shell, 0);
 }
 
 void	ft_wait(t_shell *shell)

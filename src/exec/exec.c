@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 14:26:40 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:10:17 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	call_execve(t_shell *shell, int index)
 {
 	redirect_heredoc(shell, index);
 	redirect_pipes(shell, index);
-	redirect_infiles(shell, index);
-	redirect_outfiles(shell, index);
+	redirect(shell, index);
 	if (handle_builtin(shell, index, 1))
 		exit(shell->exit_status);
 	if (shell->path[index] == NULL)
