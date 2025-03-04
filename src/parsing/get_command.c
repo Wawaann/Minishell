@@ -6,22 +6,22 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 16:50:29 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:05:17 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-int	get_number_args(char **tokens)
+int	get_number_args(t_token *tokens)
 {
 	int	i;
 	int	args;
 
 	i = 0;
 	args = 0;
-	while (tokens[i] && ft_strcmp(tokens[i], "|") != 0)
+	while (tokens[i].token && ft_strcmp(tokens[i].token, "|") != 0)
 	{
-		if (is_redirs(tokens[i]))
+		if (is_redirs(tokens[i].token))
 			args -= 2;
 		args++;
 		i++;
@@ -29,11 +29,12 @@ int	get_number_args(char **tokens)
 	return (args);
 }
 
-void	init_cmd(t_command *cmd, char **tokens)
+void	init_cmd(t_command *cmd, t_token *tokens)
 {
 	get_number_redir(tokens, &cmd->in_count, true);
 	get_number_redir(tokens, &cmd->out_count, false);
 	cmd->args = ft_calloc(get_number_args(tokens) + 1, sizeof(char *));
+	cmd->echo = ft_calloc(get_number_args(tokens) + 1, sizeof(int));
 	cmd->in = ft_calloc(cmd->in_count + 1, sizeof(t_redirs));
 	cmd->out = ft_calloc(cmd->out_count + 1, sizeof(t_redirs));
 }
@@ -52,25 +53,27 @@ bool	is_var(char *arg)
 	return (false);
 }
 
-char	*get_args(char *token, char *cmd)
+char	*get_args(t_token token, t_command *cmd, int *k)
 {
 	char	*args;
 
-	if (cmd && ft_strncmp(cmd, "echo", 4) == 0)
+	if (cmd->args[0] && ft_strncmp(cmd->args[0], "echo", 4) == 0)
 	{
-		if (is_var(token))
-			args = ft_strtrim(token, "\"");
+		if (is_var(token.token) && token.echo)
+			cmd->echo[*k] = 1;
 		else
-			args = ft_strdup(token);
+			cmd->echo[*k] = 0;
+		args = ft_strdup(token.token);
 	}
-	else if (cmd && ft_strncmp(cmd, "export", 6) == 0)
-		args = ft_strdup(token);
+	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
+		args = ft_strdup(token.token);
 	else
-		args = ft_strtrim(token, "\"'");
+		args = ft_strtrim(token.token, "\"'");
+	(*k)++;
 	return (args);
 }
 
-t_command	*get_commands(char **tokens, int cmd_nums)
+t_command	*get_commands(t_token *tokens, int cmd_nums)
 {
 	t_command	*cmds;
 	int			i;
@@ -82,18 +85,18 @@ t_command	*get_commands(char **tokens, int cmd_nums)
 	k = 0;
 	cmds = ft_calloc(cmd_nums + 1, sizeof(t_command));
 	init_cmd(&cmds[j], tokens);
-	while (tokens[i])
+	while (tokens[i].token)
 	{
-		if (ft_strcmp(tokens[i], "|") == 0)
+		if (ft_strcmp(tokens[i].token, "|") == 0)
 		{
 			j++;
 			k = 0;
 			init_cmd(&cmds[j], tokens + i + 1);
 		}
-		else if (is_redirs(tokens[i]))
+		else if (is_redirs(tokens[i].token))
 			get_redirs(&cmds[j], tokens, &i);
 		else
-			cmds[j].args[k++] = get_args(tokens[i], cmds[j].args[0]);
+			cmds[j].args[k] = get_args(tokens[i], &cmds[j], &k);
 		i++;
 	}
 	return (cmds);

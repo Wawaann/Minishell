@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:24 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 15:01:36 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:28:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_exit(t_shell *shell, char **args)
 		exit_status = 256 + exit_status;
 	else
 		exit_status = exit_status % 256;
-	free_tokens(shell->env);
+	free_tab(shell->env);
 	free_shell(shell);
 	exit(exit_status);
 }

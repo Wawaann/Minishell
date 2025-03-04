@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 15:02:53 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 17:37:45 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:18:43 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ int	is_redirs(char *token)
 	return (0);
 }
 
-void	get_number_redir(char **tokens, int *count, bool in)
+void	get_number_redir(t_token *tokens, int *count, bool in)
 {
 	int	i;
 	int	redir;
 
 	i = 0;
 	redir = 0;
-	while (tokens[i] && ft_strcmp(tokens[i], "|") != 0)
+	while (tokens[i].token && ft_strcmp(tokens[i].token, "|") != 0)
 	{
 		if (in)
 		{
-			if (is_redirs(tokens[i]) == 1 || is_redirs(tokens[i]) == 2)
+			if (is_redirs(tokens[i].token) == 1 || is_redirs(tokens[i].token) == 2)
 				redir++;
 		}
 		else
 		{
-			if (is_redirs(tokens[i]) == 3 || is_redirs(tokens[i]) == 4)
+			if (is_redirs(tokens[i].token) == 3 || is_redirs(tokens[i].token) == 4)
 				redir++;
 		}
 		i++;
@@ -49,33 +49,33 @@ void	get_number_redir(char **tokens, int *count, bool in)
 	(*count) = redir;
 }
 
-void	get_in_redir(t_command *cmd, char **tokens, int i)
+void	get_in_redir(t_command *cmd, t_token *tokens, int i)
 {
 	static int	in = 0;
 
 	if (!cmd->in[0].file)
 		in = 0;
-	cmd->in[in].type = is_redirs(tokens[i]);
-	cmd->in[in].file = ft_strtrim(tokens[i + 1], "\"'");
+	cmd->in[in].type = is_redirs(tokens[i].token);
+	cmd->in[in].file = ft_strtrim(tokens[i + 1].token, "\"'");
 	in++;
 }
 
-void	get_out_redir(t_command *cmd, char **tokens, int i)
+void	get_out_redir(t_command *cmd, t_token *tokens, int i)
 {
 	static int	out = 0;
 
 	if (!cmd->out[0].file)
 		out = 0;
-	cmd->out[out].type = is_redirs(tokens[i]);
-	cmd->out[out].file = ft_strtrim(tokens[i + 1], "\"'");
+	cmd->out[out].type = is_redirs(tokens[i].token);
+	cmd->out[out].file = ft_strtrim(tokens[i + 1].token, "\"'");
 	out++;
 }
 
-void	get_redirs(t_command *cmds, char **tokens, int *i)
+void	get_redirs(t_command *cmds, t_token *tokens, int *i)
 {
-	if (ft_strcmp(tokens[*i], "<") == 0 || ft_strcmp(tokens[*i], "<<") == 0)
+	if (ft_strcmp(tokens[*i].token, "<") == 0 || ft_strcmp(tokens[*i].token, "<<") == 0)
 		get_in_redir(cmds, tokens, *i);
-	if (ft_strcmp(tokens[*i], ">") == 0 || ft_strcmp(tokens[*i], ">>") == 0)
+	if (ft_strcmp(tokens[*i].token, ">") == 0 || ft_strcmp(tokens[*i].token, ">>") == 0)
 		get_out_redir(cmds, tokens, *i);
 	(*i)++;
 }

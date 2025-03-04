@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:00:55 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 17:02:41 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:28:23 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**realloc_env(char **env, int size)
 		i++;
 	}
 	new_env[i] = NULL;
-	free_tokens(env);
+	free_tab(env);
 	return (new_env);
 }
 

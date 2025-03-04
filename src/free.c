@@ -6,47 +6,57 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:00:37 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 11:05:53 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:24:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-void	free_tokens(char **tokens)
+void	free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (tokens[i])
-		free(tokens[i++]);
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+}
+
+void	free_tokens(t_token *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i].token)
+		free(tokens[i++].token);
 	free(tokens);
 }
 
-void	free_pipes(t_shell *shell)
+void	free_path_pipes(t_shell *shell)
 {
 	int	i;
 
 	i = 0;
-	while (i < shell->num_cmds - 1)
+	if (shell->path)
 	{
-		free(shell->pipes[i]);
-		i++;
+		while (i < shell->num_cmds)
+		{
+			if (shell->path[i])
+				free(shell->path[i]);
+			i++;
+		}
+		free(shell->path);
 	}
-	free(shell->pipes);
-}
-
-void	free_path(t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	while (i < shell->num_cmds)
+	if (shell->pipes)
 	{
-		if (shell->path[i])
-			free(shell->path[i]);
-		i++;
+		i = 0;
+		while (i < shell->num_cmds - 1)
+		{
+			free(shell->pipes[i]);
+			i++;
+		}
+		free(shell->pipes);
 	}
-	free(shell->path);
 }
 
 void	free_cmds(t_command *cmds)
@@ -82,10 +92,7 @@ void	free_shell(t_shell *shell)
 		free_tokens(shell->tokens);
 	if (shell->cmds)
 		free_cmds(shell->cmds);
-	if (shell->path)
-		free_path(shell);
-	if (shell->pipes)
-		free_pipes(shell);
+	free_path_pipes(shell);
 	shell->cmds = NULL;
 	shell->tokens = NULL;
 	shell->path = NULL;

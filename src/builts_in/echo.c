@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 17:26:27 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:08:47 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void print_env_var(t_shell *shell, const char *var)
 {
-    char *value;
+	char *value;
 
 	if (var[0] == '\0' || var[0] == ' ')
 	{
@@ -29,59 +29,55 @@ void print_env_var(t_shell *shell, const char *var)
 		return ;
 	}
 	value = getenv(var);
-    if (value)
-        printf("%s", value);
+	if (value)
+		printf("%s", value);
 }
 
-void print_argument(t_shell *shell, const char *arg)
+void print_argument(t_shell *shell, const char *arg, int echo)
 {
-    int i = 0;
-	int start;
-    bool in_double_quote = false;
-    bool in_single_quote = false;
+	int		i;
+	int		start;
+	char	*var;
 
-    while (arg[i])
-    {
-        if (arg[i] == '"' && !in_single_quote)
-            in_double_quote = !in_double_quote;
-        else if (arg[i] == '\'' && !in_double_quote)
-            in_single_quote = !in_single_quote;
-        else if (arg[i] == '$' && !in_single_quote) // Gestion de $VAR
-        {
-            start = ++i;
-            while (arg[i] && (arg[i] != ' ' && arg[i] != '"' && arg[i] != '\''))
-                i++;
-            char *var = ft_strndup(&arg[start], i - start);
-            print_env_var(shell, var);
-            free(var);
-            i--;
-        }
-        else
-            printf("%c", arg[i]);
-        i++;
-    }
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$' && echo)
+		{
+			start = ++i;
+			while (arg[i] && (arg[i] != ' ' && arg[i] != '"' && arg[i] != '\''))
+				i++;
+			var = ft_strndup(&arg[start], i - start);
+			print_env_var(shell, var);
+			free(var);
+			i--;
+		}
+		else
+			printf("%c", arg[i]);
+		i++;
+	}
 }
 
-void ft_echo(t_shell *shell, char **args)
+void ft_echo(t_shell *shell, char **args, int *echo)
 {
-    bool	newline;
-    int		i;
+	bool	newline;
+	int		i;
 
 	i = 1;
 	newline = true;
-    if (args[i] && strcmp(args[i], "-n") == 0)
-    {
-        newline = false;
-        i++;
-    }
-    while (args[i])
-    {
-        print_argument(shell, args[i]);
-        if (args[i + 1])
-            printf(" ");
-        i++;
-    }
-    if (newline)
-        printf("\n");
+	if (args[i] && strcmp(args[i], "-n") == 0)
+	{
+		newline = false;
+		i++;
+	}
+	while (args[i])
+	{
+		print_argument(shell, args[i], echo[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (newline)
+		printf("\n");
 }
 

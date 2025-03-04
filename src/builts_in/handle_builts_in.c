@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builts_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:03:11 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 16:56:16 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:48:43 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	handle_builtin(t_shell *shell, int i, int is_child)
 	else if (ft_strcmp(cmd, "env") == 0)
 		ft_env(shell);
 	else if (ft_strcmp(cmd, "echo") == 0)
-		ft_echo(shell, shell->cmds[i].args);
+		ft_echo(shell, shell->cmds[i].args, shell->cmds[i].echo);
 	else if (ft_strcmp(cmd, "export") == 0 && !shell->cmds[i].args[1])
 		print_export(shell);
 	else

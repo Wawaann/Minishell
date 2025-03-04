@@ -6,27 +6,27 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:28:51 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 14:32:56 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:27:46 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-bool	valide_pipe(char **tokens, int i, int *exit_status)
+bool	valide_pipe(t_token *tokens, int i, int *exit_status)
 {
-	if (i == 0 && ft_strncmp(tokens[i], "|", 2) == 0)
+	if (i == 0 && ft_strncmp(tokens[i].token, "|", 2) == 0)
 	{
 		printf("syntax error near unexpected token `|'\n");
 		*exit_status = 2;
 		return (false);
 	}
-	if (ft_strncmp(tokens[i], "|", 2) == 0 && !tokens[i + 1])
+	if (ft_strncmp(tokens[i].token, "|", 2) == 0 && !tokens[i + 1].token)
 	{
 		printf("syntax error near unexpected token `|'\n");
 		*exit_status = 2;
 		return (false);
 	}
-	if (ft_strncmp(tokens[i], "|", 2) == 0 && ft_strncmp(tokens[i + 1], "|",
+	if (ft_strncmp(tokens[i].token, "|", 2) == 0 && ft_strncmp(tokens[i + 1].token, "|",
 			2) == 0)
 	{
 		printf("syntax error near unexpected token `|'\n");
@@ -36,17 +36,17 @@ bool	valide_pipe(char **tokens, int i, int *exit_status)
 	return (true);
 }
 
-bool	validate_redirs(char **tokens, int i, int *exit_status)
+bool	validate_redirs(t_token *tokens, int i, int *exit_status)
 {
-	if (is_redirs(tokens[i]) && !tokens[i + 1])
+	if (is_redirs(tokens[i].token) && !tokens[i + 1].token)
 	{
 		printf("syntax error near unexpected token `newline'\n");
 		*exit_status = 2;
 		return (false);
 	}
-	if (is_redirs(tokens[i]) && is_redirs(tokens[i + 1]))
+	if (is_redirs(tokens[i].token) && is_redirs(tokens[i + 1].token))
 	{
-		printf("syntax error near unexpected token `%s'\n", tokens[i + 1]);
+		printf("syntax error near unexpected token `%s'\n", tokens[i + 1].token);
 		*exit_status = 2;
 		return (false);
 	}
@@ -58,7 +58,7 @@ bool	check_error(t_shell *shell)
 	int	i;
 
 	i = 0;
-	while (shell->tokens[i])
+	while (shell->tokens[i].token)
 	{
 		if (!valide_pipe(shell->tokens, i, &shell->exit_status))
 			return (false);

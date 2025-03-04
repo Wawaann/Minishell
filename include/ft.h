@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 17:46:28 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:24:49 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,21 @@ typedef struct s_command
 	char			**args;
 	int				in_count;
 	int				out_count;
+	int				*echo;
 	t_redirs		*in;
 	t_redirs		*out;
 }					t_command;
 
+typedef struct s_token
+{
+	char			*token;
+	bool			echo;
+}					t_token;
+
 typedef struct s_shell
 {
 	char			*input;
-	char			**tokens;
+	t_token			*tokens;
 	char			**env;
 	char			**path;
 	int				**pipes;
@@ -52,7 +59,8 @@ typedef struct s_shell
 }					t_shell;
 
 // Free
-void				free_tokens(char **tokens);
+void				free_tab(char **tab);
+void				free_tokens(t_token *tokens);
 void				free_shell(t_shell *shell);
 
 // Parsing
@@ -61,13 +69,13 @@ int					is_redirs(char *token);
 bool				check_error(t_shell *shell);
 bool				is_whitespace(char c);
 bool				is_var(char *arg);
-char				**tokenize(char *input, int *num_cmds);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);
 void				display_shell(t_shell *shell);
-void				get_number_redir(char **tokens, int *count, bool in);
-void				get_redirs(t_command *cmds, char **tokens, int *i);
-t_command			*get_commands(char **tokens, int cmd_nums);
+void				get_number_redir(t_token *tokens, int *count, bool in);
+void				get_redirs(t_command *cmds, t_token *tokens, int *i);
+t_token 			*tokenize(char *input, int *cmd__nums);
+t_command			*get_commands(t_token *tokens, int cmd_nums);
 
 // Signal
 void				init_signals(void);
@@ -105,7 +113,7 @@ void				ft_env(t_shell *shell);
 void				ft_export(t_shell *shell, char **args);
 void				print_export(t_shell *shell);
 void				ft_unset(t_shell *shell, char *var);
-void				ft_echo(t_shell *shell, char **args);
+void				ft_echo(t_shell *shell, char **args, int *echo);
 void				ft_exit(t_shell *shell, char **args);
 int					handle_builtin(t_shell *shell, int i, int is_child);
 

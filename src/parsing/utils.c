@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 16:28:30 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:20:53 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,11 @@ void	display_shell(t_shell *shell)
 	i = 0;
 	printf("Input: {%s}\n", shell->input);
 	printf("Tokens: ");
-	while (shell->tokens[i])
-		printf("[%s] ", shell->tokens[i++]);
+	while (shell->tokens[i].token)
+	{
+		printf("[\"%s\" -> %d] ", shell->tokens[i].token, shell->tokens[i].echo);
+		i++;
+	}
 	printf("\n");
 	printf("Number of commands: %d\n", shell->num_cmds);
 	printf("Commands: {\n");

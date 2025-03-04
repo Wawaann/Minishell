@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:31:58 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 16:47:41 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:25:25 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_prompt(char **env)
 	tab = ft_split(var, "/");
 	prompt = ft_strdup("\033[0;36m\033[1m~/");
 	extract_prompt(&prompt, tab);
-	free_tokens(tab);
+	free_tab(tab);
 	free(var);
 	return (prompt);
 }
