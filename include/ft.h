@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/03 18:19:02 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:27:03 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char				**get_all_path(t_shell *shell);
 char				*get_path(t_shell *shell, char *cmd_name);
 void				init_path(t_shell *shell);
 void				redirect_simple_cmd(t_shell *shell);
+void				ft_wait(t_shell *shell);
 
 // Builtin
 void				ft_pwd(void);
@@ -109,6 +110,7 @@ void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args);
 void				ft_exit(t_shell *shell, char **args);
 int					handle_builtin(t_shell *shell, int i, int is_child);
+int					is_parent_builtin(char *cmd);
 
 // Export Utils
 char				*ft_strndup(const char *s, int n);

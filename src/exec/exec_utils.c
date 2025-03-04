@@ -6,7 +6,7 @@
 /*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 19:04:34 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:26:52 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,13 @@ void	redirect_simple_cmd(t_shell *shell)
 	redirect_heredoc(shell, 0);
 	redirect_infiles(shell, 0);
 	redirect_outfiles(shell, 0);
+}
+
+void	ft_wait(t_shell *shell)
+{
+	int	status;
+
+	wait(&status);
+	if (WIFEXITED(status))
+		shell->exit_status = WEXITSTATUS(status);
 }
