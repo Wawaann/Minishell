@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 15:02:53 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 14:18:43 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:29:14 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	get_number_redir(t_token *tokens, int *count, bool in)
 	{
 		if (in)
 		{
-			if (is_redirs(tokens[i].token) == 1 || is_redirs(tokens[i].token) == 2)
+			if (is_redirs(tokens[i].token) == 1
+				|| is_redirs(tokens[i].token) == 2)
 				redir++;
 		}
 		else
 		{
-			if (is_redirs(tokens[i].token) == 3 || is_redirs(tokens[i].token) == 4)
+			if (is_redirs(tokens[i].token) == 3
+				|| is_redirs(tokens[i].token) == 4)
 				redir++;
 		}
 		i++;
@@ -73,9 +75,11 @@ void	get_out_redir(t_command *cmd, t_token *tokens, int i)
 
 void	get_redirs(t_command *cmds, t_token *tokens, int *i)
 {
-	if (ft_strcmp(tokens[*i].token, "<") == 0 || ft_strcmp(tokens[*i].token, "<<") == 0)
+	if (ft_strcmp(tokens[*i].token, "<") == 0
+		|| ft_strcmp(tokens[*i].token, "<<") == 0)
 		get_in_redir(cmds, tokens, *i);
-	if (ft_strcmp(tokens[*i].token, ">") == 0 || ft_strcmp(tokens[*i].token, ">>") == 0)
+	if (ft_strcmp(tokens[*i].token, ">") == 0
+		|| ft_strcmp(tokens[*i].token, ">>") == 0)
 		get_out_redir(cmds, tokens, *i);
 	(*i)++;
 }

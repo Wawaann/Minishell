@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:00:37 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 14:24:42 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:46:28 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	free_cmds(t_command *cmds)
 		while (cmds[i].out[j].file)
 			free(cmds[i].out[j++].file);
 		free(cmds[i].out);
+		free(cmds[i].echo);
 		i++;
 	}
 	free(cmds);

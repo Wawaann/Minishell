@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 14:24:49 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:35:43 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <errno.h>
 
 extern pid_t	g_sig_pid;
 
@@ -71,10 +72,11 @@ bool				is_whitespace(char c);
 bool				is_var(char *arg);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);
+char				*concat_tokens(char *token, char *sub_token);
 void				display_shell(t_shell *shell);
 void				get_number_redir(t_token *tokens, int *count, bool in);
 void				get_redirs(t_command *cmds, t_token *tokens, int *i);
-t_token 			*tokenize(char *input, int *cmd__nums);
+t_token				*tokenize(char *input, int *cmd__nums);
 t_command			*get_commands(t_token *tokens, int cmd_nums);
 
 // Signal
@@ -105,6 +107,7 @@ char				**get_all_path(t_shell *shell);
 char				*get_path(t_shell *shell, char *cmd_name);
 void				init_path(t_shell *shell);
 void				redirect_simple_cmd(t_shell *shell);
+void				ft_wait(t_shell *shell);
 
 // Builtin
 void				ft_pwd(void);
@@ -116,6 +119,7 @@ void				ft_unset(t_shell *shell, char *var);
 void				ft_echo(t_shell *shell, char **args, int *echo);
 void				ft_exit(t_shell *shell, char **args);
 int					handle_builtin(t_shell *shell, int i, int is_child);
+int					is_parent_builtin(char *cmd);
 
 // Export Utils
 char				*ft_strndup(const char *s, int n);

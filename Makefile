@@ -11,6 +11,7 @@ SRC	=	main.c							\
 		parsing/get_command.c			\
 		parsing/get_redirs.c			\
 		parsing/tokenize.c				\
+		parsing/token_utils.c			\
 		parsing/utils.c					\
 		builts_in/pwd.c					\
 		builts_in/cd.c					\

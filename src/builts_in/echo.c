@@ -6,15 +6,15 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 15:08:47 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:49:04 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-void print_env_var(t_shell *shell, const char *var)
+void	print_env_var(t_shell *shell, const char *var)
 {
-	char *value;
+	char	*value;
 
 	if (var[0] == '\0' || var[0] == ' ')
 	{
@@ -33,7 +33,7 @@ void print_env_var(t_shell *shell, const char *var)
 		printf("%s", value);
 }
 
-void print_argument(t_shell *shell, const char *arg, int echo)
+void	print_argument(t_shell *shell, const char *arg, int echo)
 {
 	int		i;
 	int		start;
@@ -45,7 +45,8 @@ void print_argument(t_shell *shell, const char *arg, int echo)
 		if (arg[i] == '$' && echo)
 		{
 			start = ++i;
-			while (arg[i] && (arg[i] != ' ' && arg[i] != '"' && arg[i] != '\''))
+			while (arg[i] && (arg[i] != ' '
+					&& arg[i] != '"' && arg[i] != '\'' && arg[i] != '$'))
 				i++;
 			var = ft_strndup(&arg[start], i - start);
 			print_env_var(shell, var);
@@ -58,7 +59,7 @@ void print_argument(t_shell *shell, const char *arg, int echo)
 	}
 }
 
-void ft_echo(t_shell *shell, char **args, int *echo)
+void	ft_echo(t_shell *shell, char **args, int *echo)
 {
 	bool	newline;
 	int		i;
@@ -80,4 +81,3 @@ void ft_echo(t_shell *shell, char **args, int *echo)
 	if (newline)
 		printf("\n");
 }
-
