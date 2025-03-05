@@ -4,6 +4,7 @@ SRC	=	main.c							\
 		signal.c						\
 		exec/exec.c						\
 		exec/exec_utils.c				\
+		exec/error.c					\
 		exec/handle_heredoc.c			\
 		exec/handle_pipes.c				\
 		exec/handle_redir.c				\

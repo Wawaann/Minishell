@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 14:47:06 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:08:31 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	get_number_args(t_token *tokens)
 
 void	init_cmd(t_command *cmd, t_token *tokens)
 {
-	cmd->args = ft_calloc(get_number_args(tokens) + 1, sizeof(char *));
+	cmd->num_args = get_number_args(tokens);
+	cmd->args = ft_calloc(cmd->num_args + 1, sizeof(char *));
 	cmd->echo = ft_calloc(get_number_args(tokens) + 1, sizeof(int));
 	cmd->in = get_number_redir(tokens, true);
 	cmd->out = get_number_redir(tokens, false);

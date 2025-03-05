@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 11:48:51 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:52:15 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
-
-void	ft_error(char *str)
-{
-	ft_putstr_fd(str, 2);
-	exit(EXIT_FAILURE);
-}
 
 void	call_execve(t_shell *shell, int index)
 {
@@ -26,8 +20,9 @@ void	call_execve(t_shell *shell, int index)
 	if (handle_builtin(shell, index, 1))
 		exit(shell->exit_status);
 	if (shell->path[index] == NULL)
-		exit(127);
-	execve(shell->path[index], shell->cmds[index].args, shell->env);
+		handle_exec_error(shell, index);
+	if (execve(shell->path[index], shell->cmds[index].args, shell->env) == -1)
+		handle_exec_error(shell, index);
 }
 
 void	execute_pipe(t_shell *shell)
@@ -42,10 +37,7 @@ void	execute_pipe(t_shell *shell)
 		if (g_sig_pid == -1)
 			ft_error("Error with fork");
 		if (g_sig_pid == 0)
-		{
 			call_execve(shell, i);
-			exit(127);
-		}
 		if (i == shell->num_cmds - 1)
 			shell->last_child = g_sig_pid;
 		i++;
@@ -72,13 +64,9 @@ void	execute_simple_cmd(t_shell *shell)
 		if (handle_builtin(shell, 0, 1))
 			exit(shell->exit_status);
 		if (shell->path[0] == NULL)
-		{
-			ft_putstr_fd(shell->cmds[0].args[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			exit(127);
-		}
-		execve(shell->path[0], shell->cmds[0].args, shell->env);
-		exit(127);
+			handle_exec_error(shell, 0);
+		if (execve(shell->path[0], shell->cmds[0].args, shell->env) == -1)
+			handle_exec_error(shell, 0);
 	}
 	ft_wait(shell);
 	cleanup_heredocs(shell);

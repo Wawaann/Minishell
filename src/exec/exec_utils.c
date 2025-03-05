@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 11:49:10 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:22:37 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_path(t_shell *shell, char *cmd_name)
 	char	*path;
 	int		i;
 
-	if (cmd_name && access(cmd_name, F_OK | X_OK) == 0)
+	if (cmd_name && access(cmd_name, F_OK) == 0)
 		return (ft_strdup(cmd_name));
 	all_path = get_all_path(shell);
 	if (all_path == NULL)
@@ -48,7 +48,7 @@ char	*get_path(t_shell *shell, char *cmd_name)
 		mid_path = ft_strjoin(all_path[i++], "/");
 		path = ft_strjoin(mid_path, cmd_name);
 		free(mid_path);
-		if (access(path, F_OK | X_OK) == 0)
+		if (access(path, F_OK) == 0)
 		{
 			free_tab(all_path);
 			return (path);

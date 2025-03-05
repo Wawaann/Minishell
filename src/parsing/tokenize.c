@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 14:54:25 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:14:07 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	*expand_variable(char *token)
 	if (!start || !*(start + 1))
 		return (token);
 	var_len = 0;
-	while (start[1 + var_len] && (ft_isalnum(start[1 + var_len]) || start[1 + var_len] == '_'))
+	while (start[1 + var_len] && (ft_isalnum(start[1 + var_len])
+			|| start[1 + var_len] == '_'))
 		var_len++;
 	var_name = ft_substr(start, 1, var_len);
 	var_value = getenv(var_name);
@@ -84,13 +85,12 @@ static char	*extract_token(char *input, int *i, bool *echo)
 				&& input[*i] != '\'' && !is_sep(input[*i]))
 				(*i)++;
 			sub_token = ft_substr(input, start, *i - start);
-			sub_token = expand_variable(sub_token); // Expansion en dehors des quotes simples
+			sub_token = expand_variable(sub_token);
 			token = concat_tokens(token, sub_token);
 		}
 	}
 	return (token);
 }
-
 
 static char	*extract_operator(char *input, int *i)
 {
@@ -117,12 +117,13 @@ void	set_valid_tokens(t_token *tokens)
 	{
 		tokens[i].valid = true;
 		tmp = ft_strchr(tokens[i].token, '$');
-		if (!tmp || !*(tmp + 1) || strncmp(tmp, "$ ", 2) == 0 || strncmp(tmp, "$?", 2) == 0 || strncmp(tmp, "$$", 2) == 0)
+		if (!tmp || !*(tmp + 1) || strncmp(tmp, "$ ", 2) == 0
+			|| strncmp(tmp, "$?", 2) == 0 || strncmp(tmp, "$$", 2) == 0)
 		{
 			i++;
 			continue ;
 		}
-			len = 0;
+		len = 0;
 		while (tmp[1 + len] && ft_isalnum(tmp[1 + len]))
 			len++;
 		var = ft_substr(tmp, 1, len);

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 14:31:01 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:08:19 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <errno.h>
 # include <termios.h>
@@ -35,6 +36,7 @@ typedef struct s_redirs
 typedef struct s_command
 {
 	char			**args;
+	int				num_args;
 	int				count;
 	int				in;
 	int				out;
@@ -89,6 +91,10 @@ void				init_signals(void);
 void				ft_error(char *str);
 void				execute_simple_cmd(t_shell *shell);
 void				execute_command(t_shell *shell);
+
+// Error
+void				ft_error(char *str);
+void				handle_exec_error(t_shell *shell, int index);
 
 // Handle_heredoc
 void				collect_all_heredocs(t_shell *shell);

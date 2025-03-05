@@ -6,35 +6,74 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 15:01:39 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:16:28 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-void	print_env_var(t_shell *shell, const char *var)
+void	get_terminal_pgid(void)
+{
+	int		fd;
+	pid_t	term_pgid;
+
+	fd = open("/dev/tty", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		return ;
+	}
+	if (ioctl(fd, TIOCGPGRP, &term_pgid) == -1)
+	{
+		perror("ioctl");
+		close(fd);
+		return ;
+	}
+	close(fd);
+	printf("%d", term_pgid);
+}
+
+void	print_env_var(t_shell *shell, char *var)
 {
 	char	*value;
+	char	*tmp;
+	int		i;
 
-	if (var[0] == '\0' || var[0] == ' ')
+	if (!var || var[0] == '\0' || var[0] == ' ')
+	{
 		printf("$");
-	else if (var[0] == '?')
-	{
-		printf("%d", shell->exit_status);
-		if (var[1] != '\0')
-			printf("%s", &var[1]);
+		return ;
 	}
-	else if (var[0] == '$')
+	i = 0;
+	while (var[i])
 	{
-		printf("%d", getpid());
-		if (var[1] != '\0')
-			printf("%s", &var[1]);
-	}
-	else
-	{
-		value = getenv(var);
-		if (value)
-			printf("%s", value);
+		if (var[i] == ' ')
+		{
+			printf("$");
+			return ;
+		}
+		else if (var[i] == '?')
+		{
+			printf("%d", shell->exit_status);
+			i++;
+		}
+		else if (var[i] == '$')
+		{
+			if (var[i + 1] == '$')
+				get_terminal_pgid();
+			i++;
+		}
+		else
+		{
+			tmp = ft_substr(var, i, ft_strlen_to(var + i, '$'));
+			value = getenv(tmp);
+			if (value)
+				printf("%s", value);
+			else
+				printf("%s", tmp);
+			i += ft_strlen(tmp);
+			free(tmp);
+		}
 	}
 }
 
@@ -50,8 +89,8 @@ void	print_argument(t_shell *shell, const char *arg, int echo)
 		if (arg[i] == '$' && echo)
 		{
 			start = ++i;
-			while (arg[i] && (arg[i] != ' '
-					&& arg[i] != '"' && arg[i] != '\'' && arg[i] != '$'))
+			while (arg[i] && (arg[i] != ' ' && arg[i] != '"'
+					&& arg[i] != '\''))
 				i++;
 			var = ft_strndup(&arg[start], i - start);
 			print_env_var(shell, var);
