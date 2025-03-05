@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 19:10:17 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:48:51 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	execute_simple_cmd(t_shell *shell)
 			exit(shell->exit_status);
 		if (shell->path[0] == NULL)
 		{
-			ft_putstr_fd(" command not found\n", 2);
+			ft_putstr_fd(shell->cmds[0].args[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
 			exit(127);
 		}
 		execve(shell->path[0], shell->cmds[0].args, shell->env);

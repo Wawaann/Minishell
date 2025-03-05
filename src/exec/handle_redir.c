@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:43:41 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 20:09:57 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:17:18 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,42 @@ void	handle_redir_error(t_shell *shell, int index, int i)
 	exit(shell->exit_status);
 }
 
+int	redir_in(t_command *cmds, int i, int *fd_in, int *j)
+{
+	*fd_in = open(cmds->redirs[i].file, O_RDONLY);
+	if (*fd_in == -1)
+		return (1);
+	if (*j == cmds->in - 1 && *fd_in != -1)
+		dup2(*fd_in, STDIN_FILENO);
+	if (*fd_in != -1)
+	{
+		close(*fd_in);
+		(*j)++;
+	}
+	return (0);
+}
+
+int	redir_out(t_command *cmds, int i, int *fd_out, int j)
+{
+	int	type;
+
+	type = cmds->redirs[i].type;
+	if (type == 3)
+		*fd_out = open(cmds->redirs[i].file,
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == 4)
+		*fd_out = open(cmds->redirs[i].file,
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (*fd_out == -1)
+		return (1);
+	if (*fd_out != -1 && i - j == cmds->out - 1 && type != 1)
+	{
+		dup2(*fd_out, STDOUT_FILENO);
+		close(*fd_out);
+	}
+	return (0);
+}
+
 void	redirect(t_shell *shell, int index)
 {
 	int	fd_in;
@@ -42,41 +78,12 @@ void	redirect(t_shell *shell, int index)
 		while (i < shell->cmds[index].count)
 		{
 			if (shell->cmds[index].redirs[i].type == 1)
-			{
-				// Input redirection
-				fd_in = open(shell->cmds[index].redirs[i].file, O_RDONLY);
-				if (fd_in == -1)
+				if (redir_in(&shell->cmds[index], i, &fd_in, &j) == 1)
 					handle_redir_error(shell, index, i);
-				// Duplicate input only at the last redirection
-				if (j == shell->cmds[index].in - 1 && fd_in != -1)
-				{
-					dup2(fd_in, STDIN_FILENO);
-				}
-				// Only close if successfully opened
-				if (fd_in != -1)
-				{
-					close(fd_in);
-					j++;
-				}
-			}
-			else if (shell->cmds[index].redirs[i].type == 3)
-			{
-				// Truncate output
-				fd_out = open(shell->cmds[index].redirs[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			}
-			else if (shell->cmds[index].redirs[i].type == 4)
-			{
-				// Append output
-				fd_out = open(shell->cmds[index].redirs[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			}
-			if (fd_out == -1)
-				handle_redir_error(shell, index, i);
-			// Handle output redirection
-			if (fd_out != -1 && i - j == shell->cmds[index].out - 1 && shell->cmds[index].redirs[i].type != 1)
-			{
-				dup2(fd_out, STDOUT_FILENO);
-				close(fd_out);
-			}
+			if (shell->cmds[index].redirs[i].type == 3
+				|| shell->cmds[index].redirs[i].type == 4)
+				if (redir_out(&shell->cmds[index], i, &fd_out, j) == 1)
+					handle_redir_error(shell, index, i);
 			i++;
 		}
 	}
