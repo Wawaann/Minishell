@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 14:51:50 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 17:11:37 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:03:31 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,34 @@ int	get_exit_code(void)
 	return (1);
 }
 
+void	display_error(t_shell *shell, char *arg, int index, int err)
+{
+	if ((err == ENOENT || err == EACCES) && !ft_strchr(arg, '/')
+		&& shell->cmds[index].num_args > 0)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		shell->exit_status = 127;
+	}
+	else if (is_directory(arg) && access(arg, F_OK) == 0)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		shell->exit_status = 126;
+	}
+	else if (shell->cmds[index].num_args > 0)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(err), 2);
+		ft_putstr_fd("\n", 2);
+		shell->exit_status = get_exit_code();
+	}
+}
+
 void	handle_exec_error(t_shell *shell, int index)
 {
 	int		err;
@@ -51,31 +79,6 @@ void	handle_exec_error(t_shell *shell, int index)
 	err = errno;
 	arg = shell->cmds[index].args[0];
 	if (index == shell->num_cmds - 1)
-	{
-		if ((err == ENOENT || err == EACCES) && !ft_strchr(arg, '/')
-			&& shell->cmds[index].num_args > 0)
-		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(arg, 2);
-			ft_putstr_fd(": command not found\n", 2);
-			shell->exit_status = 127;
-		}
-		else if (is_directory(arg) && access(arg, F_OK) == 0)
-		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(arg, 2);
-			ft_putstr_fd(": Is a directory\n", 2);
-			shell->exit_status = 126;
-		}
-		else if (shell->cmds[index].num_args > 0)
-		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(arg, 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(strerror(err), 2);
-			ft_putstr_fd("\n", 2);
-			shell->exit_status = get_exit_code();
-		}
-	}
+		display_error(shell, arg, index, err);
 	exit(shell->exit_status);
 }

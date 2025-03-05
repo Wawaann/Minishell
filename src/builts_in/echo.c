@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 17:16:28 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:59:45 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,38 @@ void	get_terminal_pgid(void)
 	printf("%d", term_pgid);
 }
 
+void	display_loop(t_shell *shell, char *var, char *value, int *i)
+{
+	char	*tmp;
+
+	if (var[(*i)] == ' ')
+		printf("$");
+	else if (var[(*i)] == '?')
+	{
+		printf("%d", shell->exit_status);
+		(*i)++;
+	}
+	else if (var[(*i)] == '$')
+	{
+		if (var[++(*i)] == '$')
+			get_terminal_pgid();
+	}
+	else
+	{
+		tmp = ft_substr(var, (*i), ft_strlen_to(var + (*i), '$'));
+		value = getenv(tmp);
+		if (value)
+			printf("%s", value);
+		else
+			printf("%s", tmp);
+		(*i) += ft_strlen(tmp);
+		free(tmp);
+	}
+}
+
 void	print_env_var(t_shell *shell, char *var)
 {
 	char	*value;
-	char	*tmp;
 	int		i;
 
 	if (!var || var[0] == '\0' || var[0] == ' ')
@@ -45,36 +73,9 @@ void	print_env_var(t_shell *shell, char *var)
 		return ;
 	}
 	i = 0;
+	value = NULL;
 	while (var[i])
-	{
-		if (var[i] == ' ')
-		{
-			printf("$");
-			return ;
-		}
-		else if (var[i] == '?')
-		{
-			printf("%d", shell->exit_status);
-			i++;
-		}
-		else if (var[i] == '$')
-		{
-			if (var[i + 1] == '$')
-				get_terminal_pgid();
-			i++;
-		}
-		else
-		{
-			tmp = ft_substr(var, i, ft_strlen_to(var + i, '$'));
-			value = getenv(tmp);
-			if (value)
-				printf("%s", value);
-			else
-				printf("%s", tmp);
-			i += ft_strlen(tmp);
-			free(tmp);
-		}
-	}
+		display_loop(shell, var, value, &i);
 }
 
 void	print_argument(t_shell *shell, const char *arg, int echo)

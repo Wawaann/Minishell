@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:47:00 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 17:14:07 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:48:39 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,6 @@
 static bool	is_sep(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
-}
-
-char	*expand_variable(char *token)
-{
-	char	*expanded;
-	char	*start;
-	char	*var_name;
-	char	*var_value;
-	int		var_len;
-
-	start = ft_strchr(token, '$');
-	if (!start || !*(start + 1))
-		return (token);
-	var_len = 0;
-	while (start[1 + var_len] && (ft_isalnum(start[1 + var_len])
-			|| start[1 + var_len] == '_'))
-		var_len++;
-	var_name = ft_substr(start, 1, var_len);
-	var_value = getenv(var_name);
-	free(var_name);
-	if (!var_value)
-		return (token);
-	expanded = ft_strjoin(ft_substr(token, 0, start - token), var_value);
-	expanded = ft_strjoin(expanded, start + var_len + 1);
-	free(token);
-	return (expanded);
 }
 
 static char	*handle_quotes(char *input, int *i, char quote, char *token)
@@ -68,10 +42,7 @@ static char	*extract_token(char *input, int *i, bool *echo)
 	char	*sub_token;
 
 	token = ft_strdup("");
-	if (input[*i] == '\'')
-		*echo = false;
-	else
-		*echo = true;
+	set_echo(input[*i], echo);
 	while (input[*i])
 	{
 		if (input[*i] == '"' || input[*i] == '\'')
@@ -103,35 +74,6 @@ static char	*extract_operator(char *input, int *i)
 	else
 		(*i)++;
 	return (ft_substr(input, start, *i - start));
-}
-
-void	set_valid_tokens(t_token *tokens)
-{
-	int		i;
-	int		len;
-	char	*tmp;
-	char	*var;
-
-	i = 0;
-	while (tokens[i].token)
-	{
-		tokens[i].valid = true;
-		tmp = ft_strchr(tokens[i].token, '$');
-		if (!tmp || !*(tmp + 1) || strncmp(tmp, "$ ", 2) == 0
-			|| strncmp(tmp, "$?", 2) == 0 || strncmp(tmp, "$$", 2) == 0)
-		{
-			i++;
-			continue ;
-		}
-		len = 0;
-		while (tmp[1 + len] && ft_isalnum(tmp[1 + len]))
-			len++;
-		var = ft_substr(tmp, 1, len);
-		if (!getenv(var))
-			tokens[i].valid = false;
-		free(var);
-		i++;
-	}
 }
 
 t_token	*tokenize(char *input, int *cmd__nums)
