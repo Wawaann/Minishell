@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 11:46:40 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:03:12 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	minishell(t_shell *shell, char **env)
 	init_shell(shell, env);
 	while (1)
 	{
-		shell->exit_status = 0;
 		prompt = get_prompt(shell->env);
 		shell->input = readline(prompt);
 		if (!shell->input)

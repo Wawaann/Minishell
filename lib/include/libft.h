@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:46:21 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/28 15:05:53 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:16:27 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ft_putnbr_base(unsigned long long n, int base, int up);
 void	ft_putnbr_base_fd(unsigned long long n, int base, int up, int fd);
 void	ft_putstr(char *s);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_strcpy(char *dest, const char *src);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memchr(const void *ptr, int ch, size_t size);

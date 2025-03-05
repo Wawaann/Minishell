@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 19:38:42 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:27:02 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	display_shell(t_shell *shell)
 	printf("Tokens: ");
 	while (shell->tokens[i].token)
 	{
-		printf("[\"%s\" -> %d] ", shell->tokens[i].token,
-			shell->tokens[i].echo);
+		printf("[\"%s\" -> %d -> %d] ", shell->tokens[i].token,
+			shell->tokens[i].valid , shell->tokens[i].echo);
 		i++;
 	}
 	printf("\n");

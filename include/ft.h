@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 11:18:28 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:31:01 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <signal.h>
 # include <errno.h>
 # include <termios.h>
@@ -45,6 +46,7 @@ typedef struct s_token
 {
 	char			*token;
 	bool			echo;
+	bool			valid;
 }					t_token;
 
 typedef struct s_shell

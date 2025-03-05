@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 15:49:04 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:01:39 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,25 @@ void	print_env_var(t_shell *shell, const char *var)
 	char	*value;
 
 	if (var[0] == '\0' || var[0] == ' ')
-	{
 		printf("$");
-		return ;
-	}
-	if (var[0] == '?')
+	else if (var[0] == '?')
 	{
 		printf("%d", shell->exit_status);
 		if (var[1] != '\0')
 			printf("%s", &var[1]);
-		return ;
 	}
-	value = getenv(var);
-	if (value)
-		printf("%s", value);
+	else if (var[0] == '$')
+	{
+		printf("%d", getpid());
+		if (var[1] != '\0')
+			printf("%s", &var[1]);
+	}
+	else
+	{
+		value = getenv(var);
+		if (value)
+			printf("%s", value);
+	}
 }
 
 void	print_argument(t_shell *shell, const char *arg, int echo)

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 19:37:14 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:47:06 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	get_number_args(t_token *tokens)
 	{
 		if (is_redirs(tokens[i].token))
 			args -= 2;
-		args++;
+		if (tokens[i].valid)
+			args++;
 		i++;
 	}
 	return (args);
@@ -87,15 +88,15 @@ t_command	*get_commands(t_token *tokens, int cmd_nums)
 	init_cmd(&cmds[j], tokens);
 	while (tokens[i].token)
 	{
-		if (ft_strcmp(tokens[i].token, "|") == 0)
+		if (ft_strcmp(tokens[i].token, "|") == 0 && tokens[i].valid)
 		{
 			j++;
 			k = 0;
 			init_cmd(&cmds[j], tokens + i + 1);
 		}
-		else if (is_redirs(tokens[i].token))
+		else if (is_redirs(tokens[i].token) && tokens[i].valid)
 			get_redirs(&cmds[j], tokens, &i);
-		else
+		else if (tokens[i].valid)
 			cmds[j].args[k] = get_args(tokens[i], &cmds[j], &k);
 		i++;
 	}
