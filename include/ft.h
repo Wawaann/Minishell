@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 11:18:28 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:53:07 by cedmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <errno.h>
 # include <termios.h>
@@ -87,6 +88,10 @@ void				init_signals(void);
 void				ft_error(char *str);
 void				execute_simple_cmd(t_shell *shell);
 void				execute_command(t_shell *shell);
+
+// Error
+void				ft_error(char *str);
+void				handle_exec_error(t_shell *shell, int index);
 
 // Handle_heredoc
 void				collect_all_heredocs(t_shell *shell);
