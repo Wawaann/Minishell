@@ -33,10 +33,23 @@ void	get_terminal_pgid(void)
 	printf("%d", term_pgid);
 }
 
-void	display_loop(t_shell *shell, char *var, char *value, int *i)
+void	display_var(char *var, char *value, int *i)
 {
 	char	*tmp;
 
+	tmp = ft_substr(var, (*i), ft_strlen_to(var + (*i), '$'));
+	// printf("[%s]", tmp);
+	value = getenv(tmp);
+	if (value)
+		printf("%s", value);
+	else
+		printf("%s", tmp);
+	(*i) += ft_strlen(tmp);
+	free(tmp);
+}
+
+void	display_loop(t_shell *shell, char *var, char *value, int *i)
+{
 	if (var[(*i)] == ' ')
 		printf("$");
 	else if (var[(*i)] == '?')
@@ -46,20 +59,15 @@ void	display_loop(t_shell *shell, char *var, char *value, int *i)
 	}
 	else if (var[(*i)] == '$')
 	{
-		if (var[++(*i)] == '$')
-			get_terminal_pgid();
+		get_terminal_pgid();
+		(*i)++;
 	}
 	else
 	{
-		tmp = ft_substr(var, (*i), ft_strlen_to(var + (*i), '$'));
-		value = getenv(tmp);
-		if (value)
-			printf("%s", value);
-		else
-			printf("%s", tmp);
-		(*i) += ft_strlen(tmp);
-		free(tmp);
+		display_var(var, value, i);
 	}
+	if (var[(*i)] == '$')
+		(*i)++;
 }
 
 void	print_env_var(t_shell *shell, char *var)

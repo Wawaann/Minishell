@@ -25,6 +25,7 @@ static int	handle_parent_only_builtin(t_shell *shell, int i)
 {
 	char	*cmd;
 
+	printf("handle_parent_only_builtin\n");
 	cmd = shell->cmds[i].args[0];
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (ft_cd(shell, i), 1);
@@ -48,6 +49,7 @@ int	handle_builtin(t_shell *shell, int i, int is_child)
 		handle_parent_only_builtin(shell, i);
 	if (is_child)
 	{
+		printf("is_child\n");
 		if (ft_strcmp(cmd, "pwd") == 0)
 			ft_pwd();
 		else if (ft_strcmp(cmd, "env") == 0)

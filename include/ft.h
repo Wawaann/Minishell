@@ -23,8 +23,6 @@
 # include <errno.h>
 # include <termios.h>
 
-extern pid_t	g_sig_pid;
-
 typedef struct s_redirs
 {
 	char			*file;
@@ -61,8 +59,11 @@ typedef struct s_shell
 	int				num_cmds;
 	int				exit_status;
 	pid_t			last_child;
+	pid_t			sig_pid;
 	t_command		*cmds;
 }					t_shell;
+
+extern t_shell	g_shell;
 
 // Free
 void				free_tab(char **tab);

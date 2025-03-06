@@ -46,7 +46,7 @@ char	*expand_variable(char *token)
 			|| start[1 + var_len] == '_'))
 		var_len++;
 	var_name = ft_substr(start, 1, var_len);
-	var_value = getenv(var_name);
+	var_value = get_env_var(g_shell.env, var_name);
 	free(var_name);
 	if (!var_value)
 		return (token);

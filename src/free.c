@@ -94,5 +94,5 @@ void	free_shell(t_shell *shell)
 	shell->tokens = NULL;
 	shell->path = NULL;
 	shell->pipes = NULL;
-	g_sig_pid = 0;
+	shell->sig_pid = 0;
 }

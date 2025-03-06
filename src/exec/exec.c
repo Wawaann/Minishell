@@ -33,13 +33,13 @@ void	execute_pipe(t_shell *shell)
 	i = 0;
 	while (i < shell->num_cmds)
 	{
-		g_sig_pid = fork();
-		if (g_sig_pid == -1)
+		shell->sig_pid = fork();
+		if (shell->sig_pid == -1)
 			ft_error("Error with fork");
-		if (g_sig_pid == 0)
+		if (shell->sig_pid == 0)
 			call_execve(shell, i);
 		if (i == shell->num_cmds - 1)
-			shell->last_child = g_sig_pid;
+			shell->last_child = shell->sig_pid;
 		i++;
 	}
 	ft_close_pipes(shell);
@@ -55,10 +55,10 @@ void	execute_simple_cmd(t_shell *shell)
 		handle_builtin(shell, 0, 0);
 		return ;
 	}
-	g_sig_pid = fork();
-	if (g_sig_pid == -1)
+	shell->sig_pid = fork();
+	if (shell->sig_pid == -1)
 		ft_error("Error with fork");
-	if (g_sig_pid == 0)
+	if (shell->sig_pid == 0)
 	{
 		redirect_simple_cmd(shell);
 		if (handle_builtin(shell, 0, 1))

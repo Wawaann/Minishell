@@ -17,7 +17,7 @@ static bool	is_sep(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-static char	*handle_quotes(char *input, int *i, char quote, char *token)
+char	*handle_quotes(char *input, int *i, char quote, char *token)
 {
 	int		start;
 	char	*sub_token;

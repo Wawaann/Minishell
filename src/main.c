@@ -12,7 +12,7 @@
 
 #include "../include/ft.h"
 
-pid_t	g_sig_pid;
+t_shell	g_shell;
 
 void	duplicate_env(t_shell *shell, char **env)
 {
@@ -43,13 +43,14 @@ void	init_shell(t_shell *shell, char **env)
 	shell->num_cmds = 0;
 	duplicate_env(shell, env);
 	shell->exit_status = 0;
-	g_sig_pid = 0;
+	shell->sig_pid = 0;
 	init_signals();
 }
 
 void	exec(t_shell *shell)
 {
 	shell->cmds = get_commands(shell->tokens, shell->num_cmds);
+	//display_shell(shell);
 	init_path(shell);
 	init_pipes(shell);
 	execute_command(shell);
@@ -82,14 +83,12 @@ void	minishell(t_shell *shell, char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	t_shell	shell;
-
 	(void)av;
 	if (ac != 1)
 		return (0);
-	minishell(&shell, env);
-	free_tab(shell.env);
-	free_shell(&shell);
+	minishell(&g_shell, env);
+	free_tab(g_shell.env);
+	free_shell(&g_shell);
 	rl_clear_history();
 	return (0);
 }
