@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 14:51:50 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 18:03:31 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:22:52 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	is_directory(const char *path)
 {
 	struct stat	path_stat;
 
-	stat(path, &path_stat);
+	if (stat(path, &path_stat) == -1)
+		return (0);
 	if (S_ISDIR(path_stat.st_mode))
 		return (1);
 	else
@@ -80,5 +81,6 @@ void	handle_exec_error(t_shell *shell, int index)
 	arg = shell->cmds[index].args[0];
 	if (index == shell->num_cmds - 1)
 		display_error(shell, arg, index, err);
+	free_shell(shell, true, true);
 	exit(shell->exit_status);
 }

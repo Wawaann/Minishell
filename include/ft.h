@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 17:46:44 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:28:00 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <signal.h>
 # include <errno.h>
 # include <termios.h>
+
+extern pid_t		g_sig_pid;
 
 typedef struct s_redirs
 {
@@ -52,6 +54,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	char			*input;
+	char			*prompt;
 	t_token			*tokens;
 	char			**env;
 	char			**path;
@@ -63,29 +66,27 @@ typedef struct s_shell
 	t_command		*cmds;
 }					t_shell;
 
-extern t_shell	g_shell;
-
 // Free
 void				free_tab(char **tab);
 void				free_tokens(t_token *tokens);
-void				free_shell(t_shell *shell);
+void				free_shell(t_shell *shell, bool env, bool history);
 
 // Parsing
 int					count_cmd(char *input);
 int					is_redirs(char *token);
 int					get_number_redir(t_token *tokens, bool in);
 bool				check_error(t_shell *shell);
-bool				is_whitespace(char c);
+bool				is_sep(char c);
 bool				is_var(char *arg);
-char				*expand_variable(char *token);
 char				*get_env_var(char **env, char *var);
 char				*get_prompt(char **env);
 char				*concat_tokens(char *token, char *sub_token);
+char				*refactor_token(t_shell *shell, int count);
 void				display_shell(t_shell *shell);
 void				get_redirs(t_command *cmds, t_token *tokens, int *i);
 void				set_echo(char c, bool *echo);
-void				set_valid_tokens(t_token *tokens);
-t_token				*tokenize(char *input, int *cmd__nums);
+void				set_valid_tokens(t_shell *shell);
+void				tokenize(t_shell *shell);
 t_command			*get_commands(t_token *tokens, int cmd_nums);
 
 // Signal
@@ -128,10 +129,10 @@ void				ft_env(t_shell *shell);
 void				ft_export(t_shell *shell, char **args);
 void				print_export(t_shell *shell);
 void				ft_unset(t_shell *shell, char *var);
-void				ft_echo(t_shell *shell, char **args, int *echo);
+void				ft_echo(t_shell *shell, int i);
 void				ft_exit(t_shell *shell, char **args);
 int					handle_builtin(t_shell *shell, int i, int is_child);
-int					is_parent_builtin(char *cmd);
+int					is_parent_builtin(t_shell *shell, char *cmd, int i);
 
 // Export Utils
 char				*ft_strndup(const char *s, int n);

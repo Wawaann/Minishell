@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 13:41:21 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 11:09:13 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:05:46 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_sigint(int sig)
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	if (g_shell.sig_pid == 0)
+	if (g_sig_pid == 0)
 		rl_redisplay();
 }
 

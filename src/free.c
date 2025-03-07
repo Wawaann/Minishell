@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:00:37 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 19:28:47 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:37:28 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	free_cmds(t_command *cmds)
 	free(cmds);
 }
 
-void	free_shell(t_shell *shell)
+void	free_shell(t_shell *shell, bool env, bool history)
 {
 	if (shell->input)
 		free(shell->input);
@@ -89,6 +89,17 @@ void	free_shell(t_shell *shell)
 		free_tokens(shell->tokens);
 	if (shell->cmds)
 		free_cmds(shell->cmds);
+	if (shell->prompt)
+		free(shell->prompt);
+	if (env && shell->env)
+	{
+		free_tab(shell->env);
+		shell->env = NULL;
+	}
+	if (history)
+	{
+		rl_clear_history();
+	}
 	free_path_pipes(shell);
 	shell->cmds = NULL;
 	shell->tokens = NULL;

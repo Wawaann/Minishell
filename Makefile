@@ -11,6 +11,7 @@ SRC	=	main.c							\
 		parsing/error.c					\
 		parsing/get_command.c			\
 		parsing/get_redirs.c			\
+		parsing/refactor.c				\
 		parsing/tokenize.c				\
 		parsing/token_utils.c			\
 		parsing/utils.c					\
@@ -37,7 +38,7 @@ else
 	LIB		=	-L./lib -lft -lreadline
 endif
 
-FLAG	=	-Wall -Wextra -Werror -g3
+FLAG	=	-Wall -Wextra -Werror -g
 
 NAME	=	minishell
 

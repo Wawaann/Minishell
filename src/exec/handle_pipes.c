@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:41:27 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 11:46:48 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:23:59 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_pipes(t_shell *shell)
 	shell->pipes = ft_calloc(shell->num_cmds - 1, sizeof(int *));
 	if (!shell->pipes)
 	{
-		free_shell(shell);
+		free_shell(shell, false, false);
 		ft_error("Error allocating memory for pipes\n");
 	}
 	i = 0;
@@ -28,12 +28,12 @@ void	init_pipes(t_shell *shell)
 		shell->pipes[i] = malloc(sizeof(int) * 2);
 		if (!shell->pipes[i])
 		{
-			free_shell(shell);
+			free_shell(shell, false, false);
 			ft_error("Error allocating memory for pipe\n");
 		}
 		if (pipe(shell->pipes[i]) == -1)
 		{
-			free_shell(shell);
+			free_shell(shell, false, false);
 			ft_error("Pipe error\n");
 		}
 		i++;

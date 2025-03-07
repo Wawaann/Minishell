@@ -6,13 +6,13 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:56:42 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 17:10:31 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:37:55 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft.h"
 
-t_shell	g_shell;
+pid_t	g_sig_pid;
 
 void	duplicate_env(t_shell *shell, char **env)
 {
@@ -43,14 +43,13 @@ void	init_shell(t_shell *shell, char **env)
 	shell->num_cmds = 0;
 	duplicate_env(shell, env);
 	shell->exit_status = 0;
-	shell->sig_pid = 0;
+	g_sig_pid = 0;
 	init_signals();
 }
 
 void	exec(t_shell *shell)
 {
 	shell->cmds = get_commands(shell->tokens, shell->num_cmds);
-	//display_shell(shell);
 	init_path(shell);
 	init_pipes(shell);
 	execute_command(shell);
@@ -58,37 +57,32 @@ void	exec(t_shell *shell)
 
 void	minishell(t_shell *shell, char **env)
 {
-	char	*prompt;
-
 	init_shell(shell, env);
 	while (1)
 	{
-		prompt = get_prompt(shell->env);
-		shell->input = readline(prompt);
+		shell->prompt = get_prompt(shell->env);
+		shell->input = readline(shell->prompt);
 		if (!shell->input)
 			break ;
 		if (shell->input[0] != '\0')
 		{
 			add_history(shell->input);
-			shell->tokens = tokenize(shell->input, &shell->num_cmds);
+			tokenize(shell);
 			if (check_error(shell))
 				exec(shell);
 		}
-		free_shell(shell);
-		free(prompt);
+		free_shell(shell, false, false);
 	}
-	if (prompt)
-		free(prompt);
 }
 
 int	main(int ac, char **av, char **env)
 {
+	t_shell	shell;
+
 	(void)av;
 	if (ac != 1)
 		return (0);
-	minishell(&g_shell, env);
-	free_tab(g_shell.env);
-	free_shell(&g_shell);
-	rl_clear_history();
+	minishell(&shell, env);
+	free_shell(&shell, true, true);
 	return (0);
 }

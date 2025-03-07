@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:33:27 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 17:48:34 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:36:41 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,57 +30,60 @@ void	set_echo(char c, bool *echo)
 		*echo = true;
 }
 
-char	*expand_variable(char *token)
+char	*get_var(char *token)
 {
-	char	*expanded;
-	char	*start;
-	char	*var_name;
-	char	*var_value;
-	int		var_len;
+	int		len;
+	char	*var;
 
-	start = ft_strchr(token, '$');
-	if (!start || !*(start + 1))
-		return (token);
-	var_len = 0;
-	while (start[1 + var_len] && (ft_isalnum(start[1 + var_len])
-			|| start[1 + var_len] == '_'))
-		var_len++;
-	var_name = ft_substr(start, 1, var_len);
-	var_value = get_env_var(g_shell.env, var_name);
-	free(var_name);
-	if (!var_value)
-		return (token);
-	expanded = ft_strjoin(ft_substr(token, 0, start - token), var_value);
-	expanded = ft_strjoin(expanded, start + var_len + 1);
-	free(token);
-	return (expanded);
+	len = 0;
+	while (token[1 + len] && ft_isalnum(token[1 + len]))
+		len++;
+	var = ft_substr(token, 1, len);
+	return (var);
 }
 
-void	set_valid_tokens(t_token *tokens)
+bool	is_valid_token(t_shell *shell, int count)
 {
 	int		i;
-	int		len;
+	int		valid;
 	char	*tmp;
 	char	*var;
 
 	i = 0;
-	while (tokens[i].token)
+	valid = 0;
+	while (shell->tokens[count].token[i])
 	{
-		tokens[i].valid = true;
-		tmp = ft_strchr(tokens[i].token, '$');
-		if (!tmp || !*(tmp + 1) || strncmp(tmp, "$ ", 2) == 0
-			|| strncmp(tmp, "$?", 2) == 0 || strncmp(tmp, "$$", 2) == 0)
-		{
-			i++;
-			continue ;
-		}
-		len = 0;
-		while (tmp[1 + len] && ft_isalnum(tmp[1 + len]))
-			len++;
-		var = ft_substr(tmp, 1, len);
-		if (!getenv(var))
-			tokens[i].valid = false;
+		tmp = ft_strchr(shell->tokens[count].token + i, '$');
+		if (!tmp || !*(tmp + 1))
+			break ;
+		if (ft_strncmp(tmp, "$ ", 2) == 0
+			|| ft_strncmp(tmp, "$?", 2) == 0 || ft_strncmp(tmp, "$$", 2) == 0)
+			valid++;
+		var = get_var(tmp);
+		if (get_env_var(shell->env, var))
+			valid++;
 		free(var);
+		i++;
+	}
+	if (valid == 0 && i > 0)
+		return (false);
+	return (true);
+}
+
+void	set_valid_tokens(t_shell *shell)
+{
+	int		i;
+
+	i = 0;
+	while (shell->tokens[i].token)
+	{
+		shell->tokens[i].valid = true;
+		if (shell->tokens[i].echo)
+		{
+			shell->tokens[i].valid = is_valid_token(shell, i);
+			if (shell->tokens[i].valid)
+				shell->tokens[i].token = refactor_token(shell, i);
+		}
 		i++;
 	}
 }

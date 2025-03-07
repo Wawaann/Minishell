@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:43:41 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 11:17:18 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:31:05 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handle_redir_error(t_shell *shell, int index, int i)
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 	shell->exit_status = 1;
+	free_shell(shell, false, true);
 	exit(shell->exit_status);
 }
 

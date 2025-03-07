@@ -6,13 +6,13 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:06:44 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/02/20 11:54:22 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:24:29 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int	is_sep(char c, char *sep)
+static int	is_sep(char c, char *sep)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:31:58 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/04 14:25:25 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:58:06 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_env_var(char **env, char *var)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], var, len) == 0 && env[i][len] == '=')
-			return (ft_strdup(env[i] + len + 1));
+			return (env[i] + len + 1);
 		i++;
 	}
 	return (NULL);
@@ -65,6 +65,5 @@ char	*get_prompt(char **env)
 	prompt = ft_strdup("\033[0;36m\033[1m~/");
 	extract_prompt(&prompt, tab);
 	free_tab(tab);
-	free(var);
 	return (prompt);
 }

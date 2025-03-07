@@ -6,15 +6,15 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:54:40 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 17:15:17 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:26:12 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-bool	is_whitespace(char c)
+bool	is_sep(char c)
 {
-	return (c == ' ' || c == '\t');
+	return (c == '|' || c == '<' || c == '>');
 }
 
 int	count_cmd(char *input)

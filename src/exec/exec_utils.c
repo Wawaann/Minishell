@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/05 12:22:37 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:30:03 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	init_path(t_shell *shell)
 	shell->path = ft_calloc(shell->num_cmds + 1, sizeof(char *));
 	if (!shell->path)
 	{
-		free_shell(shell);
+		free_shell(shell, false, false);
 		ft_error("Error allocating memory for paths\n");
 	}
 	while (i < shell->num_cmds)
