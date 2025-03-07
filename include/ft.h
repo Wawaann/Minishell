@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/07 16:28:00 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:07:09 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ typedef struct s_redirs
 	int				type;
 }					t_redirs;
 
-// Type de redirection [1: <, 2: <<, 3: >, 4: >>]
-
 typedef struct s_command
 {
 	char			**args;
@@ -40,7 +38,6 @@ typedef struct s_command
 	int				count;
 	int				in;
 	int				out;
-	int				*echo;
 	t_redirs		*redirs;
 }					t_command;
 
@@ -62,7 +59,6 @@ typedef struct s_shell
 	int				num_cmds;
 	int				exit_status;
 	pid_t			last_child;
-	pid_t			sig_pid;
 	t_command		*cmds;
 }					t_shell;
 

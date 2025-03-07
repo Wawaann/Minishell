@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:20:09 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/05 17:08:31 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:08:18 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_cmd(t_command *cmd, t_token *tokens)
 {
 	cmd->num_args = get_number_args(tokens);
 	cmd->args = ft_calloc(cmd->num_args + 1, sizeof(char *));
-	cmd->echo = ft_calloc(get_number_args(tokens) + 1, sizeof(int));
 	cmd->in = get_number_redir(tokens, true);
 	cmd->out = get_number_redir(tokens, false);
 	cmd->count = cmd->in + cmd->out;
@@ -55,23 +54,16 @@ bool	is_var(char *arg)
 	return (false);
 }
 
-char	*get_args(t_token token, t_command *cmd, int *k)
+char	*get_args(t_token token, t_command *cmd)
 {
 	char	*args;
 
 	if (cmd->args[0] && ft_strncmp(cmd->args[0], "echo", 4) == 0)
-	{
-		if (is_var(token.token) && token.echo)
-			cmd->echo[*k] = 1;
-		else
-			cmd->echo[*k] = 0;
 		args = ft_strdup(token.token);
-	}
 	else if (cmd->args[0] && ft_strncmp(cmd->args[0], "export", 6) == 0)
 		args = ft_strdup(token.token);
 	else
 		args = ft_strtrim(token.token, "\"'");
-	(*k)++;
 	return (args);
 }
 
@@ -98,7 +90,7 @@ t_command	*get_commands(t_token *tokens, int cmd_nums)
 		else if (is_redirs(tokens[i].token) && tokens[i].valid)
 			get_redirs(&cmds[j], tokens, &i);
 		else if (tokens[i].valid)
-			cmds[j].args[k] = get_args(tokens[i], &cmds[j], &k);
+			cmds[j].args[k++] = get_args(tokens[i], &cmds[j]);
 		i++;
 	}
 	return (cmds);

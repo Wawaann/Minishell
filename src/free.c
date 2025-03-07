@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:00:37 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/07 12:37:28 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:07:51 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	free_cmds(t_command *cmds)
 		while (cmds[i].redirs[j].file)
 			free(cmds[i].redirs[j++].file);
 		free(cmds[i].redirs);
-		free(cmds[i].echo);
 		i++;
 	}
 	free(cmds);
@@ -105,5 +104,5 @@ void	free_shell(t_shell *shell, bool env, bool history)
 	shell->tokens = NULL;
 	shell->path = NULL;
 	shell->pipes = NULL;
-	shell->sig_pid = 0;
+	g_sig_pid = 0;
 }
