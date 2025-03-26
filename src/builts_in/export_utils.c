@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:00:55 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/07 11:48:00 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:08:54 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 char	*ft_strndup(const char *s, int n)
 {
@@ -79,6 +79,7 @@ void	print_export(t_shell *shell)
 		printf("%s\n", shell->env[i]);
 		i++;
 	}
+	shell->exit_status = 0;
 }
 
 void	handle_invalid_identifier(t_shell *shell, char *arg)

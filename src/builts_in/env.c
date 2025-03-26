@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:59:16 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 11:24:16 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:08:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	ft_env(t_shell *shell)
 {
@@ -23,4 +23,5 @@ void	ft_env(t_shell *shell)
 			printf("%s\n", shell->env[i]);
 		i++;
 	}
+	shell->exit_status = 0;
 }

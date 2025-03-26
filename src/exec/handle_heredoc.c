@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:45:09 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/04 17:58:24 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:54:02 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	read_hd(t_shell *shell, char *limiter, char *name)
 {

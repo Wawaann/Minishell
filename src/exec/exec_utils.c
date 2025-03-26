@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:03 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/07 11:30:03 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:53:45 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 char	**get_all_path(t_shell *shell)
 {

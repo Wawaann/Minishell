@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:43:41 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/07 11:31:05 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:54:02 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	handle_redir_error(t_shell *shell, int index, int i)
 {

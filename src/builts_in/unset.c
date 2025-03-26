@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:46:00 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/27 11:12:56 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:10:42 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	ft_unset(t_shell *shell, char *var)
 {
@@ -36,4 +36,5 @@ void	ft_unset(t_shell *shell, char *var)
 		}
 		i++;
 	}
+	shell->exit_status = 0;
 }

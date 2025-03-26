@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:31:21 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/07 17:14:18 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:08:17 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	ft_echo(t_shell *shell, int count)
 {
@@ -34,4 +34,5 @@ void	ft_echo(t_shell *shell, int count)
 	}
 	if (newline)
 		printf("\n");
+	shell->exit_status = 0;
 }

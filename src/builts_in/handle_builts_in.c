@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 18:03:11 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/07 15:36:55 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:09:51 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 int	is_parent_builtin(t_shell *shell, char *cmd, int index)
 {
@@ -50,7 +50,7 @@ int	handle_builtin(t_shell *shell, int i, int is_child)
 	if (is_child)
 	{
 		if (ft_strcmp(cmd, "pwd") == 0)
-			ft_pwd();
+			ft_pwd(shell);
 		else if (ft_strcmp(cmd, "env") == 0)
 			ft_env(shell);
 		else if (ft_strcmp(cmd, "echo") == 0)

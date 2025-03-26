@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:56:58 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 18:26:21 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:01:37 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	update_pwd(t_shell *shell, char *var)
 {
@@ -37,6 +37,7 @@ int	check_args(t_shell *shell, char **path, int index)
 		shell->exit_status = 1;
 		return (1);
 	}
+	shell->exit_status = 0;
 	if (!(*path))
 	{
 		*path = getenv("HOME");
@@ -65,6 +66,7 @@ int	check_access(t_shell *shell, char *path)
 		shell->exit_status = 1;
 		return (1);
 	}
+	shell->exit_status = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:46:06 by ebigotte          #+#    #+#             */
-/*   Updated: 2025/03/07 17:07:09 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:24:19 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void				redirect_simple_cmd(t_shell *shell);
 void				ft_wait(t_shell *shell);
 
 // Builtin
-void				ft_pwd(void);
+void				ft_pwd(t_shell *shell);
 void				ft_cd(t_shell *shell, int index);
 void				ft_env(t_shell *shell);
 void				ft_export(t_shell *shell, char **args);

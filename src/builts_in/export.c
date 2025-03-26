@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:55:52 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/03 17:46:21 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:05:21 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	add_update_env(t_shell *shell, char *var, char *name, char *has_value)
 {
@@ -35,6 +35,7 @@ void	add_update_env(t_shell *shell, char *var, char *name, char *has_value)
 	shell->env = realloc_env(shell->env, i + 1);
 	shell->env[i] = ft_strdup(var);
 	shell->env[i + 1] = NULL;
+	shell->exit_status = 0;
 }
 
 void	ft_export(t_shell *shell, char **args)

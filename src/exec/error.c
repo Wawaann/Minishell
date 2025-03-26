@@ -6,11 +6,11 @@
 /*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 14:51:50 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/03/07 11:22:52 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:53:38 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
 void	ft_error(char *str)
 {

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cedmarti <cedmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:34:31 by cedmarti          #+#    #+#             */
-/*   Updated: 2025/02/28 12:02:17 by cedmarti         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:54:54 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft.h"
+#include "ft.h"
 
-void	ft_pwd(void)
+void	ft_pwd(t_shell *shell)
 {
 	char	*cwd;
 
@@ -21,4 +21,5 @@ void	ft_pwd(void)
 		ft_putstr_fd("Error with pwd\n", 2);
 	printf("%s\n", cwd);
 	free(cwd);
+	shell->exit_status = 0;
 }
