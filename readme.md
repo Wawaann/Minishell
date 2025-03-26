@@ -19,14 +19,18 @@ To compile the project, follow these steps:
    ```bash
    git clone https://github.com/Wawaann/Minishell.git
    cd Minishell
+
+2. Install the `readline` library if it is not already installed:
+    ```bash
+    sudo apt-get install libreadline-dev
     ```
 
-2. Compile the project using the provided `Makefile`:
+3. Compile the project using the provided `Makefile`:
     ```bash
     make
     ```
 
-3. Run the compiled executable:
+4. Run the compiled executable:
     ```bash
     ./minishell
     ```
