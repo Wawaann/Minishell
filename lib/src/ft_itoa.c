@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <ebigotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:31:58 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/08 14:58:29 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:40:17 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,3 @@ char	*ft_itoa(int num)
 	}
 	return (str);
 }
-/*
-int main()
-{
-	char *str = ft_itoa(-0);
-	printf("str: %s\n", str);
-	return (0);
-}*/

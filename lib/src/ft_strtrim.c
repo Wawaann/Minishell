@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <bigotte.ewan@gmail.com>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:02:36 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/29 16:01:00 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:41:20 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,4 @@ char	*ft_strtrim(const char *s, const char *set)
 		str[i++] = s[start++];
 	return (str);
 }
-/*
-int main()
-{
-	char *s = "";
-	char *set = " ";
-	char *str = ft_strtrim(s, set);
-	printf("str: %s\n", str);
-	return (0);
-}*/
+

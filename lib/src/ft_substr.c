@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebigotte <bigotte.ewan@gmail.com>          +#+  +:+       +#+        */
+/*   By: ebigotte <ebigotte@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:04:52 by ebigotte          #+#    #+#             */
-/*   Updated: 2024/11/12 13:06:40 by ebigotte         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:41:24 by ebigotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,3 @@ char	*ft_substr(const char *s, int start, size_t len)
 	}
 	return (str);
 }
-
-// int main()
-// {
-// 	char *s = ft_substr("tripouille", 0, 0);
-// 	printf("s: (%s)\n", s);
-// 	return (0);
-// }
